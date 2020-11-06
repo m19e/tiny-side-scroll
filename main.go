@@ -2,6 +2,7 @@ package main
 
 import (
 	"image"
+	"image/color"
 	"log"
 	"strings"
 
@@ -179,6 +180,8 @@ func (g *Game) Update() error {
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
+	screen.Fill(color.NRGBA{uint8(155), uint8(188), uint8(15), 0xff})
+
 	g.Player.Move([]sprite.Sprite{g.Blocks[0], g.Blocks[1]})
 
 	g.Player.DrawImage(screen)
