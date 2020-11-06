@@ -1,4 +1,4 @@
-module sprite
+module github.com/m19e/tiny-side-scroll/sprite
 
 go 1.14
 
