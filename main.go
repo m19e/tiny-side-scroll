@@ -78,16 +78,6 @@ var block_img = `++++++++++++++++
 ++++++++++++++++
 ++++++++++++++++`
 
-var (
-	charWidth   = 16
-	charHeight  = 16
-	tmpImage    *image.RGBA
-	playerAnim0 *ebiten.Image
-	playerAnim1 *ebiten.Image
-	playerAnim2 *ebiten.Image
-	blockImg    *ebiten.Image
-)
-
 func createImageFromString(charString string, img *image.RGBA) {
 	for indexY, line := range strings.Split(charString, "\n") {
 		for indexX, str := range line {
@@ -107,6 +97,27 @@ func createImageFromString(charString string, img *image.RGBA) {
 	}
 }
 
+const (
+	screenWidth  = 320
+	screenHeight = 240
+
+	frameOX     = 0
+	frameOY     = 32
+	frameWidth  = 32
+	frameHeight = 32
+	frameNum    = 8
+)
+
+var (
+	charWidth   = 16
+	charHeight  = 16
+	tmpImage    *image.RGBA
+	playerAnim0 *ebiten.Image
+	playerAnim1 *ebiten.Image
+	playerAnim2 *ebiten.Image
+	blockImg    *ebiten.Image
+)
+
 type Game struct {
 	Player *sprite.Player
 	Blocks []*sprite.Block
@@ -116,19 +127,19 @@ func (g *Game) Init() {
 	tmpImage = image.NewRGBA(image.Rect(0, 0, charWidth, charHeight))
 
 	createImageFromString(player_anim0, tmpImage)
-	playerAnim0, _ = ebiten.NewImage(charWidth, charHeight, ebiten.FilterNearest)
+	playerAnim0 = ebiten.NewImage(charWidth, charHeight)
 	playerAnim0.ReplacePixels(tmpImage.Pix)
 
 	createImageFromString(player_anim1, tmpImage)
-	playerAnim1, _ = ebiten.NewImage(charWidth, charHeight, ebiten.FilterNearest)
+	playerAnim1 = ebiten.NewImage(charWidth, charHeight)
 	playerAnim1.ReplacePixels(tmpImage.Pix)
 
 	createImageFromString(player_anim2, tmpImage)
-	playerAnim2, _ = ebiten.NewImage(charWidth, charHeight, ebiten.FilterNearest)
+	playerAnim2 = ebiten.NewImage(charWidth, charHeight)
 	playerAnim2.ReplacePixels(tmpImage.Pix)
 
 	createImageFromString(block_img, tmpImage)
-	blockImg, _ = ebiten.NewImage(charWidth, charHeight, ebiten.FilterNearest)
+	blockImg = ebiten.NewImage(charWidth, charHeight)
 	blockImg.ReplacePixels(tmpImage.Pix)
 
 	// プレイヤー
@@ -155,26 +166,31 @@ func (g *Game) Init() {
 	}
 }
 
-func (g *Game) MainLoop(screen *ebiten.Image) error {
-	g.Player.Move([]sprite.Sprite{g.Blocks[0], g.Blocks[1]})
+func (g *Game) Update() error {
+	return nil
+}
 
-	if ebiten.IsRunningSlowly() {
-		return nil
-	}
+func (g *Game) Draw(screen *ebiten.Image) {
+	g.Player.Move([]sprite.Sprite{g.Blocks[0], g.Blocks[1]})
 
 	g.Player.DrawImage(screen)
 	for _, block := range g.Blocks {
 		block.DrawImage(screen)
 	}
+}
 
-	return nil
+func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
+	return screenWidth, screenHeight
 }
 
 func main() {
-	game := Game{}
+	game := &Game{}
 	game.Init()
 
-	if err := ebiten.Run(game.MainLoop, 320, 240, 2, "tiny-side-scroll"); err != nil {
+	ebiten.SetWindowSize(screenWidth*2, screenHeight*2)
+	ebiten.SetWindowTitle("tiny-side-scroll")
+
+	if err := ebiten.RunGame(game); err != nil {
 		log.Fatal(err)
 	}
 }
