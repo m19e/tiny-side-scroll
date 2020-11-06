@@ -1,6 +1,6 @@
 package sprite
 
-import "github.com/hajimehoshi/ebiten"
+import "github.com/hajimehoshi/ebiten/v2"
 
 func isOverlap(x1, x2, x3, x4 int) bool {
 	if x1 <= x4 && x2 >= x3 {
