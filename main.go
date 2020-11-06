@@ -1,30 +1,180 @@
 package main
 
 import (
+	"image"
 	"log"
+	"strings"
 
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
+
+	"github.com/m19e/tiny-side-scroll/sprite"
 )
 
-type Game struct{}
+var player_anim0 = `------+++++-----
+----+++++++++---
+---+++++++++++--
+--+++++++++++++-
+--++++--+++--++-
+-+++++--+++--++-
++++++++++++++++-
+++++++++++++++++
+++++++++++++++++
+++++++-+++++-+++
++++++++-----++++
++-++++++++++++++
+--++++++++++++-+
+---++++++++++---
+---++-----++----
+--+++++--+++++--`
 
-func (g *Game) Update() error {
+var player_anim1 = `------+++++-----
+----+++++++++---
+---+++++++++++--
+--+++++++++++++-
+--++++--+++--++-
+-+++++--+++--++-
++++++++++++++++-
+++++++++++++++++
+++++++++++++++++
+++++++-+++++-+++
++++++++-----++++
++-++++++++++++++
+--++++++++++++-+
+---++++++++++---
+--+++++---++----
+---------+++++--`
+
+var player_anim2 = `------+++++-----
+----+++++++++---
+---+++++++++++--
+--+++++++++++++-
+--++++--+++--++-
+-+++++--+++--++-
++++++++++++++++-
+++++++++++++++++
+++++++++++++++++
+++++++-+++++-+++
++++++++-----++++
++-++++++++++++++
+--++++++++++++-+
+---++++++++++---
+---++----+++++--
+--+++++---------`
+
+var block_img = `++++++++++++++++
+++++++++++++++++
+++++++++++++++++
+++++++++++++++++
+++++++++++++++++
+++++++++++++++++
+++++++++++++++++
+++++++++++++++++
+++++++++++++++++
+++++++++++++++++
+++++++++++++++++
+++++++++++++++++
+++++++++++++++++
+++++++++++++++++
+++++++++++++++++
+++++++++++++++++`
+
+var (
+	charWidth   = 16
+	charHeight  = 16
+	tmpImage    *image.RGBA
+	playerAnim0 *ebiten.Image
+	playerAnim1 *ebiten.Image
+	playerAnim2 *ebiten.Image
+	blockImg    *ebiten.Image
+)
+
+func createImageFromString(charString string, img *image.RGBA) {
+	for indexY, line := range strings.Split(charString, "\n") {
+		for indexX, str := range line {
+			pos := 4*indexY*charWidth + 4*indexX
+			if string(str) == "+" {
+				img.Pix[pos] = 0xff   // R
+				img.Pix[pos+1] = 0xff // G
+				img.Pix[pos+2] = 0xff // B
+				img.Pix[pos+3] = 0xff // A
+			} else {
+				img.Pix[pos] = 0
+				img.Pix[pos+1] = 0
+				img.Pix[pos+2] = 0
+				img.Pix[pos+3] = 0
+			}
+		}
+	}
+}
+
+type Game struct {
+	Player *sprite.Player
+	Blocks []*sprite.Block
+}
+
+func (g *Game) Init() {
+	tmpImage = image.NewRGBA(image.Rect(0, 0, charWidth, charHeight))
+
+	createImageFromString(player_anim0, tmpImage)
+	playerAnim0, _ = ebiten.NewImage(charWidth, charHeight, ebiten.FilterNearest)
+	playerAnim0.ReplacePixels(tmpImage.Pix)
+
+	createImageFromString(player_anim1, tmpImage)
+	playerAnim1, _ = ebiten.NewImage(charWidth, charHeight, ebiten.FilterNearest)
+	playerAnim1.ReplacePixels(tmpImage.Pix)
+
+	createImageFromString(player_anim2, tmpImage)
+	playerAnim2, _ = ebiten.NewImage(charWidth, charHeight, ebiten.FilterNearest)
+	playerAnim2.ReplacePixels(tmpImage.Pix)
+
+	createImageFromString(block_img, tmpImage)
+	blockImg, _ = ebiten.NewImage(charWidth, charHeight, ebiten.FilterNearest)
+	blockImg.ReplacePixels(tmpImage.Pix)
+
+	// プレイヤー
+	images := []*ebiten.Image{
+		playerAnim0,
+		playerAnim1,
+		playerAnim2,
+	}
+	g.Player = sprite.NewPlayer(images)
+	g.Player.Position.X = 10
+	g.Player.Position.Y = 10
+
+	// ブロック
+	block1 := sprite.NewBlock([]*ebiten.Image{blockImg})
+	block1.Position.X = 100
+	block1.Position.Y = 50
+	block2 := sprite.NewBlock([]*ebiten.Image{blockImg})
+	block2.Position.X = 200
+	block2.Position.Y = 100
+
+	g.Blocks = []*sprite.Block{
+		block1,
+		block2,
+	}
+}
+
+func (g *Game) MainLoop(screen *ebiten.Image) error {
+	g.Player.Move([]sprite.Sprite{g.Blocks[0], g.Blocks[1]})
+
+	if ebiten.IsRunningSlowly() {
+		return nil
+	}
+
+	g.Player.DrawImage(screen)
+	for _, block := range g.Blocks {
+		block.DrawImage(screen)
+	}
+
 	return nil
 }
 
-func (g *Game) Draw(screen *ebiten.Image) {
-	ebitenutil.DebugPrint(screen, "Hello, World!")
-}
-
-func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
-	return 320, 240
-}
-
 func main() {
-	ebiten.SetWindowSize(640, 480)
-	ebiten.SetWindowTitle("Hello, World!")
-	if err := ebiten.RunGame(&Game{}); err != nil {
+	game := Game{}
+	game.Init()
+
+	if err := ebiten.Run(game.MainLoop, 320, 240, 2, "tiny-side-scroll"); err != nil {
 		log.Fatal(err)
 	}
 }
