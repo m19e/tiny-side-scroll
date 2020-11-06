@@ -151,7 +151,6 @@ func (g *Game) Init() {
 	blockImg = ebiten.NewImage(charWidth, charHeight)
 	blockImg.ReplacePixels(tmpImage.Pix)
 
-	// プレイヤー
 	images := []*ebiten.Image{
 		playerAnim0,
 		playerAnim1,
@@ -161,7 +160,6 @@ func (g *Game) Init() {
 	g.Player.Position.X = 10
 	g.Player.Position.Y = 10
 
-	// ブロック
 	block1 := sprite.NewBlock([]*ebiten.Image{blockImg})
 	block1.Position.X = 100
 	block1.Position.Y = 50
