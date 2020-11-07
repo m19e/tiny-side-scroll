@@ -163,8 +163,8 @@ const (
 )
 
 var (
-	charWidth   = 20
-	charHeight  = 20
+	charWidth   = 15
+	charHeight  = 18
 	tmpImage    *image.RGBA
 	playerAnim0 *ebiten.Image
 	playerAnim1 *ebiten.Image
