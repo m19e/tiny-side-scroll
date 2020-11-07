@@ -100,7 +100,7 @@ func createImageFromString(charString string, img *image.RGBA) {
 				img.Pix[pos] = uint8(155)   // R
 				img.Pix[pos+1] = uint8(188) // G
 				img.Pix[pos+2] = uint8(15)  // B
-				img.Pix[pos+3] = 0xff       // A
+				img.Pix[pos+3] = 0          // A
 			}
 		}
 	}
