@@ -1,6 +1,14 @@
 package sprite
 
-import "github.com/hajimehoshi/ebiten/v2"
+import (
+	"math"
+
+	"github.com/hajimehoshi/ebiten/v2"
+)
+
+func round(f float64) int {
+	return int(math.Floor(f + .5))
+}
 
 func isOverlap(x1, x2, x3, x4 int) bool {
 	if x1 <= x4 && x2 >= x3 {
