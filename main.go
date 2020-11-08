@@ -287,14 +287,14 @@ func (g *Game) Init() {
 	for x := 0; x < 640; x += (charWidth + 1) {
 		block := sprite.NewBlock([]*ebiten.Image{blockImg})
 		block.Position.X = x
-		block.Position.Y = 204
+		block.Position.Y = 210
 		g.Blocks = append(g.Blocks, block)
 	}
 	// 空中の床
 	for x := 9 * (charWidth + 1); x < 13*(charWidth+1); x += (charWidth + 1) {
 		block := sprite.NewBlock([]*ebiten.Image{blockImg})
 		block.Position.X = x
-		block.Position.Y = 100
+		block.Position.Y = 115
 		g.Blocks = append(g.Blocks, block)
 	}
 
