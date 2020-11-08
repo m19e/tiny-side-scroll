@@ -298,6 +298,22 @@ func (g *Game) Init() {
 		g.Blocks = append(g.Blocks, block)
 	}
 
+	// 左の壁
+	for y := 0; y < 200; y += (charWidth + 1) {
+		block := sprite.NewBlock([]*ebiten.Image{blockImg})
+		block.Position.X = 0
+		block.Position.Y = y
+		g.Blocks = append(g.Blocks, block)
+	}
+
+	// 右の壁
+	for y := 0; y < 200; y += (charWidth + 1) {
+		block := sprite.NewBlock([]*ebiten.Image{blockImg})
+		block.Position.X = 629
+		block.Position.Y = y
+		g.Blocks = append(g.Blocks, block)
+	}
+
 	// 階段ブロック
 	block1 := sprite.NewBlock([]*ebiten.Image{blockImg})
 	block1.Position.X = 4 * (charWidth + 1)
