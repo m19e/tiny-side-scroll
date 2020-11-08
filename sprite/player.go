@@ -33,6 +33,13 @@ func NewPlayer(images []*ebiten.Image) *Player {
 	return player
 }
 
+func (p *Player) jump() {
+	if !p.jumping {
+		p.jumping = true
+		p.jumpSpeed = -6
+	}
+}
+
 func (p *Player) Move(objects []Sprite) {
 	var dx, dy int
 	if ebiten.IsKeyPressed(ebiten.KeyLeft) {
