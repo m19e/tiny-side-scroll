@@ -36,7 +36,7 @@ func NewPlayer(images []*ebiten.Image) *Player {
 func (p *Player) jump() {
 	if !p.jumping {
 		p.jumping = true
-		p.jumpSpeed = -6
+		p.jumpSpeed = -7
 	}
 }
 
