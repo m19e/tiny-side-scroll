@@ -81,8 +81,17 @@ func (p *Player) Move(objects []Sprite) {
 		dx, dy = p.IsCollide(dx, dy, object)
 	}
 
-	p.Position.X += dx
-	p.Position.Y += dy
+	if p.Position.X+dx < xLeftLimit || p.Position.X+dx > xRightLimit {
+		p.ViewPort.X -= dx
+	} else {
+		p.Position.X += dx
+	}
+
+	if p.Position.Y+dy < yUpperLimit || p.Position.Y+dy > yLowerLimit {
+		p.ViewPort.Y -= dy
+	} else {
+		p.Position.Y += dy
+	}
 }
 
 func (p *Player) IsCollide(dx, dy int, object Sprite) (int, int) {
