@@ -100,6 +100,8 @@ func (p *Player) IsCollide(dx, dy int, object Sprite) (int, int) {
 			dy = 0
 		} else if dy > 0 && y+h+dy >= y1 && y+dy <= y1+h1 {
 			dy = 0
+			p.jumping = false
+			p.jumpSpeed = 0
 		}
 	}
 
