@@ -299,7 +299,7 @@ func (g *Game) Init() {
 	}
 
 	// 左の壁
-	for y := 0; y < 200; y += (charWidth + 1) {
+	for y := 0; y < 200; y += (charHeight + 1) {
 		block := sprite.NewBlock([]*ebiten.Image{blockImg})
 		block.Position.X = 0
 		block.Position.Y = y
@@ -307,7 +307,7 @@ func (g *Game) Init() {
 	}
 
 	// 右の壁
-	for y := 0; y < 200; y += (charWidth + 1) {
+	for y := 0; y < 200; y += (charHeight + 1) {
 		block := sprite.NewBlock([]*ebiten.Image{blockImg})
 		block.Position.X = 629
 		block.Position.Y = y
