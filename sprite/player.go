@@ -6,6 +6,13 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
+const (
+	xLeftLimit  = 16 * 3
+	xRightLimit = 320 - (16 * 3)
+	yUpperLimit = 16 * 2
+	yLowerLimit = 240 - (16 * 2)
+)
+
 func round(f float64) int {
 	return int(math.Floor(f + .5))
 }
