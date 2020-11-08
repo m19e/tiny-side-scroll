@@ -326,7 +326,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 
 	g.Player.DrawImage(screen)
 	for _, block := range g.Blocks {
-		block.DrawImage(screen)
+		block.DrawImage(screen, g.Player.ViewPort)
 	}
 }
 
