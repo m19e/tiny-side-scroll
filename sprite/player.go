@@ -50,14 +50,24 @@ func (p *Player) Move(objects []Sprite) {
 		dx = 1
 		p.count++
 	}
-	if ebiten.IsKeyPressed(ebiten.KeyUp) {
-		dy = -1
+	// if ebiten.IsKeyPressed(ebiten.KeyUp) {
+	// 	dy = -1
+	// 	p.count++
+	// }
+	// if ebiten.IsKeyPressed(ebiten.KeyDown) {
+	// 	dy = 1
+	// 	p.count++
+	// }
+
+	if ebiten.IsKeyPressed(ebiten.KeySpace) {
+		p.jump()
 		p.count++
 	}
-	if ebiten.IsKeyPressed(ebiten.KeyDown) {
-		dy = 1
-		p.count++
+
+	if p.jumpSpeed < 5 {
+		p.jumpSpeed += p.fallSpeed
 	}
+	dy = round(p.jumpSpeed)
 
 	for _, object := range objects {
 		dx, dy = p.IsCollide(dx, dy, object)
