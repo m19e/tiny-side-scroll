@@ -102,6 +102,10 @@ func (p *Player) IsCollide(dx, dy int, object Sprite) (int, int) {
 
 	x1, y1, w1, h1 := object.GetCordinates()
 
+	// 対象オブジェクトは相対座標付与して衝突判定を行う
+	x1 += p.ViewPort.X
+	y1 += p.ViewPort.Y
+
 	overlappedX := isOverlap(x, x+w, x1, x1+w1)
 	overlappedY := isOverlap(y, y+h, y1, y1+h1)
 
