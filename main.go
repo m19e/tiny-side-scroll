@@ -267,8 +267,8 @@ func (g *Game) Init() {
 		playerAnim2,
 	}
 	g.Player = sprite.NewPlayer(images)
-	g.Player.Position.X = 10
-	g.Player.Position.Y = 10
+	g.Player.Position.X = 160
+	g.Player.Position.Y = 50
 
 	// block1 := sprite.NewBlock([]*ebiten.Image{blockImg})
 	// block1.Position.X = 100
