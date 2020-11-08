@@ -284,10 +284,10 @@ func (g *Game) Init() {
 
 	// ブロック
 	// 床
-	for x := 0; x < 320; x += (charWidth + 1) {
+	for x := 0; x < 640; x += (charWidth + 1) {
 		block := sprite.NewBlock([]*ebiten.Image{blockImg})
 		block.Position.X = x
-		block.Position.Y = 200
+		block.Position.Y = 204
 		g.Blocks = append(g.Blocks, block)
 	}
 	// 空中の床
