@@ -354,7 +354,7 @@ func main() {
 	game := &Game{}
 	game.Init()
 
-	ebiten.SetWindowSize(screenWidth*2, screenHeight*2)
+	ebiten.SetWindowSize(screenWidth, screenHeight)
 	ebiten.SetWindowTitle("tiny-side-scroll")
 
 	if err := ebiten.RunGame(game); err != nil {
