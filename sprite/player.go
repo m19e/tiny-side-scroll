@@ -19,12 +19,17 @@ func isOverlap(x1, x2, x3, x4 int) bool {
 
 type Player struct {
 	BaseSprite
+	jumping   bool
+	jumpSpeed float64
+	fallSpeed float64
 }
 
 func NewPlayer(images []*ebiten.Image) *Player {
 	player := new(Player)
 	player.Images = images
 	player.ImageNum = len(images)
+	player.jumpSpeed = 0
+	player.fallSpeed = 0.4
 	return player
 }
 
