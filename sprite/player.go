@@ -29,6 +29,7 @@ type Player struct {
 	jumping   bool
 	jumpSpeed float64
 	fallSpeed float64
+	ViewPort  position
 }
 
 func NewPlayer(images []*ebiten.Image) *Player {
