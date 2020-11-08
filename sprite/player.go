@@ -124,3 +124,9 @@ func (p *Player) IsCollide(dx, dy int, object Sprite) (int, int) {
 
 	return dx, dy
 }
+
+func (p *Player) DrawImage(screen *ebiten.Image) {
+	op := &ebiten.DrawImageOptions{}
+	op.GeoM.Translate(float64(p.Position.X), float64(p.Position.Y))
+	screen.DrawImage(p.currentImage(), op)
+}
