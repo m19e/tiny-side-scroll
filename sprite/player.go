@@ -95,6 +95,17 @@ func (p *Player) Move(objects []Sprite) {
 	}
 }
 
+func (p *Player) Action() {
+	if ebiten.IsKeyPressed(ebiten.KeyF) {
+		pos := position{
+			X: (p.Position.X - p.ViewPort.X) + 8,
+			Y: (p.Position.Y - p.ViewPort.Y) + 4,
+		}
+		javelin := NewJavelin(pos)
+		p.PlayerJavelins = append(p.PlayerJavelins, javelin)
+	}
+}
+
 func (p *Player) IsCollide(dx, dy int, object Sprite) (int, int) {
 	x := p.Position.X
 	y := p.Position.Y
