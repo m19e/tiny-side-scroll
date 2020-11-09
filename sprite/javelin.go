@@ -11,7 +11,7 @@ const (
 	javelin_img = `-----+-
 +++++++
 -----+-`
-	javelinSpeed = 4
+	javelinSpeed = 2
 	screenWidth  = 320
 	screenHeight = 240
 )
