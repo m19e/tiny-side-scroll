@@ -4,6 +4,7 @@ import (
 	"math"
 
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
 
 const (
@@ -96,7 +97,7 @@ func (p *Player) Move(objects []Sprite) {
 }
 
 func (p *Player) Action() {
-	if ebiten.IsKeyPressed(ebiten.KeyF) {
+	if inpututil.IsKeyJustPressed(ebiten.KeyF) {
 		pos := position{
 			X: (p.Position.X - p.ViewPort.X) + 8,
 			Y: (p.Position.Y - p.ViewPort.Y) + 4,
