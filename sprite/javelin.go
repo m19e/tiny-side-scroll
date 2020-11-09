@@ -77,5 +77,6 @@ func (js *Javelins) Move(viewport position) {
 			javelins = append(javelins[:i], javelins[i+1:]...)
 			i--
 		}
+		*js = javelins
 	}
 }
