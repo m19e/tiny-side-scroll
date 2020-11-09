@@ -339,8 +339,13 @@ func (g *Game) Draw(screen *ebiten.Image) {
 		sprites = append(sprites, b)
 	}
 	g.Player.Move(sprites)
+	g.Player.Action()
+	g.Player.PlayerJavelins.Move(g.Player.ViewPort)
 
 	g.Player.DrawImage(screen)
+	for _, j := range g.Player.PlayerJavelins {
+		j.DrawImage(screen, g.Player.ViewPort)
+	}
 	for _, block := range g.Blocks {
 		block.DrawImage(screen, g.Player.ViewPort)
 	}
