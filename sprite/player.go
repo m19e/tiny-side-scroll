@@ -1,7 +1,9 @@
 package sprite
 
 import (
+	"image"
 	"math"
+	"strings"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
@@ -12,7 +14,103 @@ const (
 	xRightLimit = 320 - (16 * 3)
 	yUpperLimit = 16 * 2
 	yLowerLimit = 240 - (16 * 2)
+
+	charWidth  = 16
+	charHeight = 16
+
+	player_anim0 = `-----++--++-----
+----+--++--+----
+---+-+----+-+---
+--+-+--++--+-+--
+--+---+--+---+--
+-+--++----++--+-
+-+-+-+----+-+-+-
++--+-+----+--+-+
+-+-+--------+-+-
+--+-++++++++-+--
+------++++------
+-----+-++-+-----
+-----+-++-+-----
+----+-+--+-+----
+----++-++-++----
+------+--+------`
+
+	player_anim1 = `-----++--++-----
+----+--++--+----
+---+-+----+-+---
+--+-+--++--+-+--
+--+---+--+---+--
+-+--++----++--+-
+-+-+-+----+-+-+-
++--+-+----+--+-+
+-+-+--------+-+-
+--+-++++++++-+--
+------++++------
+-----+-++-+-----
+-----+-++-+-----
+----+-+--+-+----
+----++-++-++----
+---------+------`
+
+	player_anim2 = `-----++--++-----
+----+--++--+----
+---+-+----+-+---
+--+-+--++--+-+--
+--+---+--+---+--
+-+--++----++--+-
+-+-+-+----+-+-+-
++--+-+----+--+-+
+-+-+--------+-+-
+--+-++++++++-+--
+------++++------
+-----+-++-+-----
+-----+-++-+-----
+----+-+--+-+----
+----++-++-++----
+------+---------`
 )
+
+var (
+	playerAnim0 *ebiten.Image
+	playerAnim1 *ebiten.Image
+	playerAnim2 *ebiten.Image
+)
+
+func createImageFromStr(charString string, img *image.RGBA) {
+	width := img.Rect.Size().X
+	for indexY, line := range strings.Split(charString, "\n") {
+		for indexX, str := range line {
+			pos := 4*indexY*width + 4*indexX
+			if string(str) == "+" {
+				img.Pix[pos] = uint8(15)   // R
+				img.Pix[pos+1] = uint8(56) // G
+				img.Pix[pos+2] = uint8(15) // B
+				img.Pix[pos+3] = 0xff      // A
+			} else {
+				img.Pix[pos] = uint8(155)   // R
+				img.Pix[pos+1] = uint8(188) // G
+				img.Pix[pos+2] = uint8(15)  // B
+				img.Pix[pos+3] = 0          // A
+			}
+		}
+	}
+}
+
+func init() {
+	tmpImage := image.NewRGBA(image.Rect(0, 0, charWidth, charHeight))
+
+	createImageFromStr(player_anim0, tmpImage)
+	playerAnim0 = ebiten.NewImage(charWidth, charHeight)
+	playerAnim0.ReplacePixels(tmpImage.Pix)
+
+	createImageFromStr(player_anim1, tmpImage)
+	playerAnim1 = ebiten.NewImage(charWidth, charHeight)
+	playerAnim0.ReplacePixels(tmpImage.Pix)
+
+	createImageFromStr(player_anim2, tmpImage)
+	playerAnim2 = ebiten.NewImage(charWidth, charHeight)
+	playerAnim0.ReplacePixels(tmpImage.Pix)
+}
 
 func round(f float64) int {
 	return int(math.Floor(f + .5))
@@ -34,10 +132,14 @@ type Player struct {
 	PlayerJavelins Javelins
 }
 
-func NewPlayer(images []*ebiten.Image) *Player {
+func NewPlayer() *Player {
 	player := new(Player)
-	player.Images = images
-	player.ImageNum = len(images)
+	player.Images = []*ebiten.Image{
+		playerAnim0,
+		playerAnim1,
+		playerAnim2,
+	}
+	player.ImageNum = len(player.Images)
 	player.jumpSpeed = 0
 	player.fallSpeed = 0.4
 	return player
