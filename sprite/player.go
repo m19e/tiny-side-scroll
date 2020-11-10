@@ -162,15 +162,6 @@ func (p *Player) Move(objects []Sprite) {
 		dx = 1
 		p.count++
 	}
-	// if ebiten.IsKeyPressed(ebiten.KeyUp) {
-	// 	dy = -1
-	// 	p.count++
-	// }
-	// if ebiten.IsKeyPressed(ebiten.KeyDown) {
-	// 	dy = 1
-	// 	p.count++
-	// }
-
 	if ebiten.IsKeyPressed(ebiten.KeySpace) {
 		p.jump()
 		p.count++
