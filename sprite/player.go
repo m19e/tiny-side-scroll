@@ -85,11 +85,11 @@ func init() {
 
 	utils.CreateImageFromString(player_anim1, tmpImage)
 	playerAnim1 = ebiten.NewImage(charWidth, charHeight)
-	playerAnim0.ReplacePixels(tmpImage.Pix)
+	playerAnim1.ReplacePixels(tmpImage.Pix)
 
 	utils.CreateImageFromString(player_anim2, tmpImage)
 	playerAnim2 = ebiten.NewImage(charWidth, charHeight)
-	playerAnim0.ReplacePixels(tmpImage.Pix)
+	playerAnim2.ReplacePixels(tmpImage.Pix)
 }
 
 func round(f float64) int {
