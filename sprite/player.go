@@ -30,7 +30,7 @@ type Player struct {
 	jumping        bool
 	jumpSpeed      float64
 	fallSpeed      float64
-	ViewPort       position
+	ViewPort       Position
 	PlayerJavelins Javelins
 }
 
@@ -98,7 +98,7 @@ func (p *Player) Move(objects []Sprite) {
 
 func (p *Player) Action() {
 	if inpututil.IsKeyJustPressed(ebiten.KeyF) {
-		pos := position{
+		pos := Position{
 			X: (p.Position.X - p.ViewPort.X) + 8,
 			Y: (p.Position.Y - p.ViewPort.Y) + 4,
 		}

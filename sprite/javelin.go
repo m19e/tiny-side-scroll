@@ -53,7 +53,7 @@ type Javelin struct {
 	BaseSprite
 }
 
-func NewJavelin(pos position) *Javelin {
+func NewJavelin(pos Position) *Javelin {
 	javelin := new(Javelin)
 	javelin.Images = []*ebiten.Image{
 		javelinImg,
@@ -63,7 +63,7 @@ func NewJavelin(pos position) *Javelin {
 	return javelin
 }
 
-func (js *Javelins) Move(viewport position) {
+func (js *Javelins) Move(viewport Position) {
 	javelins := *js
 
 	for i := 0; i < len(javelins); i++ {
