@@ -38,7 +38,7 @@ func (g *Game) Init() {
 	for x := 0; x < 640; x += (charWidth + 1) {
 		block := sprite.NewBlock()
 		block.Position.X = x
-		block.Position.Y = 210
+		block.Position.Y = 204
 		g.Blocks = append(g.Blocks, block)
 	}
 	// 空中の床
