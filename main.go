@@ -243,30 +243,7 @@ type Game struct {
 }
 
 func (g *Game) Init() {
-	tmpImage = image.NewRGBA(image.Rect(0, 0, charWidth, charHeight))
-
-	createImageFromString(player_anim0, tmpImage)
-	playerAnim0 = ebiten.NewImage(charWidth, charHeight)
-	playerAnim0.ReplacePixels(tmpImage.Pix)
-
-	createImageFromString(player_anim1, tmpImage)
-	playerAnim1 = ebiten.NewImage(charWidth, charHeight)
-	playerAnim1.ReplacePixels(tmpImage.Pix)
-
-	createImageFromString(player_anim2, tmpImage)
-	playerAnim2 = ebiten.NewImage(charWidth, charHeight)
-	playerAnim2.ReplacePixels(tmpImage.Pix)
-
-	createImageFromString(block_img, tmpImage)
-	blockImg = ebiten.NewImage(charWidth, charHeight)
-	blockImg.ReplacePixels(tmpImage.Pix)
-
-	images := []*ebiten.Image{
-		playerAnim0,
-		playerAnim1,
-		playerAnim2,
-	}
-	g.Player = sprite.NewPlayer(images)
+	g.Player = sprite.NewPlayer()
 	g.Player.Position.X = 160
 	g.Player.Position.Y = 50
 

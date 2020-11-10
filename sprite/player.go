@@ -3,10 +3,10 @@ package sprite
 import (
 	"image"
 	"math"
-	"strings"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
+	"github.com/m19e/tiny-side-scroll/utils"
 )
 
 const (
@@ -76,38 +76,18 @@ var (
 	playerAnim2 *ebiten.Image
 )
 
-func createImageFromStr(charString string, img *image.RGBA) {
-	width := img.Rect.Size().X
-	for indexY, line := range strings.Split(charString, "\n") {
-		for indexX, str := range line {
-			pos := 4*indexY*width + 4*indexX
-			if string(str) == "+" {
-				img.Pix[pos] = uint8(15)   // R
-				img.Pix[pos+1] = uint8(56) // G
-				img.Pix[pos+2] = uint8(15) // B
-				img.Pix[pos+3] = 0xff      // A
-			} else {
-				img.Pix[pos] = uint8(155)   // R
-				img.Pix[pos+1] = uint8(188) // G
-				img.Pix[pos+2] = uint8(15)  // B
-				img.Pix[pos+3] = 0          // A
-			}
-		}
-	}
-}
-
 func init() {
 	tmpImage := image.NewRGBA(image.Rect(0, 0, charWidth, charHeight))
 
-	createImageFromStr(player_anim0, tmpImage)
+	utils.CreateImageFromString(player_anim0, tmpImage)
 	playerAnim0 = ebiten.NewImage(charWidth, charHeight)
 	playerAnim0.ReplacePixels(tmpImage.Pix)
 
-	createImageFromStr(player_anim1, tmpImage)
+	utils.CreateImageFromString(player_anim1, tmpImage)
 	playerAnim1 = ebiten.NewImage(charWidth, charHeight)
 	playerAnim0.ReplacePixels(tmpImage.Pix)
 
-	createImageFromStr(player_anim2, tmpImage)
+	utils.CreateImageFromString(player_anim2, tmpImage)
 	playerAnim2 = ebiten.NewImage(charWidth, charHeight)
 	playerAnim0.ReplacePixels(tmpImage.Pix)
 }
