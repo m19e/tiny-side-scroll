@@ -4,6 +4,7 @@ import "github.com/hajimehoshi/ebiten/v2"
 
 type Sprite interface {
 	GetCordinates() (int, int, int, int)
+	DrawImage(*ebiten.Image, Position)
 }
 
 type Position struct {
