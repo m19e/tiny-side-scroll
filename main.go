@@ -3,8 +3,9 @@ package main
 import (
 	"log"
 
+	"tiny-side-scroll/game"
+
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/m19e/tiny-side-scroll/game"
 )
 
 func main() {
