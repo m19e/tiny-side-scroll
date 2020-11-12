@@ -4,9 +4,10 @@ import (
 	"image"
 	"math"
 
+	"tiny-side-scroll/utils"
+
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
-	"github.com/m19e/tiny-side-scroll/utils"
 )
 
 const (

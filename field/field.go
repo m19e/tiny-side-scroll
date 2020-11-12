@@ -3,8 +3,9 @@ package field
 import (
 	"strings"
 
+	"tiny-side-scroll/sprite"
+
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/m19e/tiny-side-scroll/sprite"
 )
 
 const (
@@ -12,7 +13,7 @@ const (
 	height = 17
 
 	blockMark  = "+"
-	playerMark = "p"
+	playerMark = "P"
 )
 
 type Field struct {

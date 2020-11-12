@@ -2,12 +2,14 @@ package game
 
 import (
 	"image/color"
+	"tiny-side-scroll/field"
 
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/m19e/tiny-side-scroll/field"
 )
 
 type Game struct {
+	// Player *sprite.Player
+	// Blocks []*sprite.Block
 	Field *field.Field
 }
 

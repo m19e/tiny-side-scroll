@@ -3,8 +3,9 @@ package sprite
 import (
 	"image"
 
+	"tiny-side-scroll/utils"
+
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/m19e/tiny-side-scroll/utils"
 )
 
 const (
