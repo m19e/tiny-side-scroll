@@ -8,3 +8,5 @@ require (
 )
 
 replace github.com/m19e/tiny-side-scroll/game => ./game
+
+replace github.com/m19e/tiny-side-scroll/field => ./field

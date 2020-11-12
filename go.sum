@@ -16,6 +16,8 @@ github.com/jfreymuth/vorbis v1.0.0/go.mod h1:8zy3lUAm9K/rJJk223RKy6vjCZTWC61NA2Q
 github.com/kr/pty v1.1.1/go.mod h1:pFQYn66WHrOpPYNljwOMqo10TkYh1fy3cYio2l3bCsQ=
 github.com/kr/text v0.1.0/go.mod h1:4Jbv+DJW3UT/LiOwJeYQe1efqtUx/iVham/4vfdArNI=
 github.com/m19e/tiny-side-scroll v0.0.0-20201106171213-3928471b9c79 h1:Ui6T/v8o3AoEGEK8Qn2GiCSMnpA+CI2hA8gAwJcJi2E=
+github.com/m19e/tiny-side-scroll/sprite v0.0.0-20201110135115-3d9bd9028582 h1:CdzWPElSOzLFtkX6rBv+/sKn7TYSc6MiSoSi9YpjjuA=
+github.com/m19e/tiny-side-scroll/sprite v0.0.0-20201110135115-3d9bd9028582/go.mod h1:ckoLlLmmc5dGj6J4E5CLKr7P7b/qkjndOBFey/AQpr0=
 github.com/m19e/tiny-side-scroll/utils v0.0.0-20201110085225-248cb34fb3e3 h1:B8nj6Kka5cd90gCL2jjCAtjyKQuNdw0aKighEppLby4=
 github.com/m19e/tiny-side-scroll/utils v0.0.0-20201110085225-248cb34fb3e3/go.mod h1:CNK1YjMgM5h4TI/RUR0Og4j4MLxh3HhEuPE7DJZz5Lk=
 github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e/go.mod h1:zD1mROLANZcx1PVRCS0qkT7pwLkGfwJo4zjcN/Tysno=
