@@ -1,4 +1,4 @@
-module field
+module github.com/m19e/tiny-side-scroll/field
 
 go 1.14
 
