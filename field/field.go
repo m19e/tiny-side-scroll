@@ -13,7 +13,7 @@ const (
 	height = 17
 
 	blockMark  = "+"
-	playerMark = "p"
+	playerMark = "P"
 )
 
 type Field struct {
