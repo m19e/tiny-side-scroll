@@ -3,7 +3,7 @@ package sprite
 import "github.com/hajimehoshi/ebiten/v2"
 
 type Sprite interface {
-	GetCordinates() (int, int, int, int)
+	GetCoordinates() (int, int, int, int)
 	DrawImage(*ebiten.Image, Position)
 }
 
@@ -42,7 +42,7 @@ func (s *BaseSprite) DrawImage(screen *ebiten.Image, viewPort Position) {
 	screen.DrawImage(s.currentImage(), op)
 }
 
-func (s *BaseSprite) GetCordinates() (int, int, int, int) {
+func (s *BaseSprite) GetCoordinates() (int, int, int, int) {
 	w, h := s.currentImage().Size()
 	return s.Position.X, s.Position.Y, w, h
 }

@@ -187,7 +187,7 @@ func (p *Player) IsCollide(dx, dy int, object Sprite) (int, int) {
 	img := p.currentImage()
 	w, h := img.Size()
 
-	x1, y1, w1, h1 := object.GetCordinates()
+	x1, y1, w1, h1 := object.GetCoordinates()
 
 	// 対象オブジェクトは相対座標付与して衝突判定を行う
 	x1 += p.ViewPort.X
