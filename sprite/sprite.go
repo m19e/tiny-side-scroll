@@ -8,6 +8,7 @@ import (
 type Sprite interface {
 	GetCoordinates() (int, int, int, int)
 	DrawImage(*ebiten.Image, Position)
+	Collision(Sprite, *int, *int, *CollideMap)
 }
 
 type Position struct {
