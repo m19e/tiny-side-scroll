@@ -12,6 +12,17 @@ type Position struct {
 	Y int
 }
 
+type CollideMap struct {
+	Left   bool
+	Right  bool
+	Top    bool
+	Bottom bool
+}
+
+func (cm *CollideMap) HasCollision() bool {
+	return cm.Left || cm.Right || cm.Top || cm.Bottom	
+}
+
 type BaseSprite struct {
 	Images     []*ebiten.Image // Image array for Animation sprite
 	ImageNum   int             // Amount of all images
