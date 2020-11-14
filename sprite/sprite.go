@@ -1,6 +1,9 @@
 package sprite
 
-import "github.com/hajimehoshi/ebiten/v2"
+import (
+	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/sirupsen/logrus"
+)
 
 type Sprite interface {
 	GetCoordinates() (int, int, int, int)
@@ -20,7 +23,7 @@ type CollideMap struct {
 }
 
 func (cm *CollideMap) HasCollision() bool {
-	return cm.Left || cm.Right || cm.Top || cm.Bottom	
+	return cm.Left || cm.Right || cm.Top || cm.Bottom
 }
 
 type BaseSprite struct {
@@ -56,4 +59,8 @@ func (s *BaseSprite) DrawImage(screen *ebiten.Image, viewPort Position) {
 func (s *BaseSprite) GetCoordinates() (int, int, int, int) {
 	w, h := s.currentImage().Size()
 	return s.Position.X, s.Position.Y, w, h
+}
+
+func (s *BaseSprite) Collision(object Sprite, dx, dy *int, cm *CollideMap) {
+	logrus.Info("overwrite this method.")
 }
