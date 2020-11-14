@@ -9,8 +9,6 @@ import (
 )
 
 type Game struct {
-	// Player *sprite.Player
-	// Blocks []*sprite.Block
 	Field *field.Field
 }
 
