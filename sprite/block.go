@@ -6,6 +6,7 @@ import (
 	"tiny-side-scroll/utils"
 
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/sirupsen/logrus"
 )
 
 const (
@@ -52,4 +53,27 @@ func NewBlock() *Block {
 	}
 	block.ImageNum = len(block.Images)
 	return block
+}
+
+func (b *Block) Collision(object Sprite, dx, dy *int, cm *CollideMap) {
+	switch v := object.(type) {
+	case *Player:
+		b.collidePlayer(v, dx, dy, cm)
+	default:
+		logrus.Warn("unknown type")
+	}
+}
+
+func (b *Block) collidePlayer(p *Player, dx, dy *int, cm *CollideMap) {
+	if cm.Left || cm.Right {
+		*dx = 0
+	}
+	if cm.Top {
+		*dy = 0
+	}
+	if cm.Bottom {
+		*dy = 0
+		p.jumping = false
+		p.jumpSpeed = 0
+	}
 }

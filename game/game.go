@@ -3,6 +3,7 @@ package game
 import (
 	"image/color"
 	"tiny-side-scroll/field"
+	"tiny-side-scroll/sprite"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -32,7 +33,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	g.Field.Player.Action()
 	g.Field.Player.PlayerJavelins.Move(g.Field.Player.ViewPort)
 
-	g.Field.Player.DrawImage(screen)
+	g.Field.Player.DrawImage(screen, sprite.Position{})
 	for _, j := range g.Field.Player.PlayerJavelins {
 		j.DrawImage(screen, g.Field.Player.ViewPort)
 	}
