@@ -154,7 +154,7 @@ func (p *Player) Move(objects []Sprite) {
 	dy = round(p.jumpSpeed)
 
 	for _, object := range objects {
-		dx, dy = p.IsCollide(dx, dy, object)
+		p.IsCollide(&dx, &dy, object)
 	}
 
 	if p.Position.X+dx < xLeftLimit || p.Position.X+dx > xRightLimit {
@@ -181,7 +181,8 @@ func (p *Player) Action() {
 	}
 }
 
-func (p *Player) IsCollide(dx, dy int, object Sprite) (int, int) {
+func (p *Player) IsCollide(dx, dy *int, object Sprite) {
+	var cm CollideMap
 	x := p.Position.X
 	y := p.Position.Y
 	img := p.currentImage()
@@ -197,26 +198,26 @@ func (p *Player) IsCollide(dx, dy int, object Sprite) (int, int) {
 	overlappedY := isOverlap(y, y+h, y1, y1+h1)
 
 	if overlappedY {
-		if dx < 0 && x+dx <= x1+w1 && x+w+dx >= x1 {
-			dx = 0
-		} else if dx > 0 && x+w+dx >= x1 && x+dx <= x1+w1 {
-			dx = 0
+		if *dx < 0 && x+*dx <= x1+w1 && x+w+*dx >= x1 {
+			cm.Left = true
+		} else if *dx > 0 && x+w+*dx >= x1 && x+*dx <= x1+w1 {
+			cm.Right = true
 		}
 	}
 	if overlappedX {
-		if dy < 0 && y+dy <= y1+h1 && y+h+dy >= y1 {
-			dy = 0
-		} else if dy > 0 && y+h+dy >= y1 && y+dy <= y1+h1 {
-			dy = 0
-			p.jumping = false
-			p.jumpSpeed = 0
+		if *dy < 0 && y+*dy <= y1+h1 && y+h+*dy >= y1 {
+			cm.Top = true
+		} else if *dy > 0 && y+h+*dy >= y1 && y+*dy <= y1+h1 {
+			cm.Bottom = true
 		}
 	}
 
-	return dx, dy
+	if cm.HasCollision() {
+		object.Collision(p, dx, dy, &cm)
+	}
 }
 
-func (p *Player) DrawImage(screen *ebiten.Image) {
+func (p *Player) DrawImage(screen *ebiten.Image, _ Position) {
 	op := &ebiten.DrawImageOptions{}
 	op.GeoM.Translate(float64(p.Position.X), float64(p.Position.Y))
 	screen.DrawImage(p.currentImage(), op)
