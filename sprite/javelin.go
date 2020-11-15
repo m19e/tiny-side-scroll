@@ -2,7 +2,7 @@ package sprite
 
 import (
 	"image"
-	"strings"
+	"tiny-side-scroll/utils"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -22,29 +22,9 @@ var (
 	javelinImg *ebiten.Image
 )
 
-func createImageFromString(charString string, img *image.RGBA) {
-	width := img.Rect.Size().X
-	for indexY, line := range strings.Split(charString, "\n") {
-		for indexX, str := range line {
-			pos := 4*indexY*width + 4*indexX
-			if string(str) == "+" {
-				img.Pix[pos] = uint8(15)   // R
-				img.Pix[pos+1] = uint8(56) // G
-				img.Pix[pos+2] = uint8(15) // B
-				img.Pix[pos+3] = 0xff      // A
-			} else {
-				img.Pix[pos] = uint8(155)   // R
-				img.Pix[pos+1] = uint8(188) // G
-				img.Pix[pos+2] = uint8(15)  // B
-				img.Pix[pos+3] = 0          // A
-			}
-		}
-	}
-}
-
 func init() {
 	tmpImage := image.NewRGBA(image.Rect(0, 0, 7, 3))
-	createImageFromString(javelin_img, tmpImage)
+	utils.CreateImageFromString(javelin_img, tmpImage, utils.Green)
 	javelinImg = ebiten.NewImage(7, 3)
 	javelinImg.ReplacePixels(tmpImage.Pix)
 }
