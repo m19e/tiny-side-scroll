@@ -191,7 +191,7 @@ func (p *Player) IsCollide(dx, dy *int, object Sprite) {
 	x1, y1, w1, h1 := object.GetCoordinates()
 
 	x1 += p.ViewPort.X
-	y1 += p.ViewPort.Y + 1
+	y1 += p.ViewPort.Y + 1 // +1 for land correctly
 
 	overlappedX := isOverlap(x, x+w, x1, x1+w1)
 	overlappedY := isOverlap(y, y+h, y1, y1+h1)
