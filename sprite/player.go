@@ -106,11 +106,11 @@ func isOverlap(x1, x2, x3, x4 int) bool {
 
 type Player struct {
 	BaseSprite
-	jumping        bool
-	jumpSpeed      float64
-	fallSpeed      float64
-	ViewPort       Position
-	PlayerJavelins Javelins
+	jumping   bool
+	jumpSpeed float64
+	fallSpeed float64
+	ViewPort  Position
+	Javelins  Javelins
 }
 
 func NewPlayer() *Player {
@@ -177,7 +177,7 @@ func (p *Player) Action() {
 			Y: (p.Position.Y - p.ViewPort.Y) + 4,
 		}
 		javelin := NewJavelin(pos)
-		p.PlayerJavelins = append(p.PlayerJavelins, javelin)
+		p.Javelins = append(p.Javelins, javelin)
 	}
 }
 
