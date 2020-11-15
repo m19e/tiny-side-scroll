@@ -6,6 +6,7 @@ import (
 	"tiny-side-scroll/utils"
 
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/sirupsen/logrus"
 )
 
 const (
@@ -56,4 +57,17 @@ func (m *Mallow) DrawImage(screen *ebiten.Image, viewPort Position) {
 		op.GeoM.Translate(float64(m.Position.X+viewPort.X), float64(m.Position.Y+viewPort.Y))
 		screen.DrawImage(m.currentImage(), op)
 	}
+}
+
+func (m *Mallow) Collision(object Sprite, dx, dy *int, cm *CollideMap) {
+	switch v := object.(type) {
+	case *Player:
+		m.collidePlayer(v)
+	default:
+		logrus.Warn("unknown type")
+	}
+}
+
+func (m *Mallow) collidePlayer(p *Player) {
+	m.Alive = false
 }
