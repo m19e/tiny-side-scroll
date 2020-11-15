@@ -80,15 +80,15 @@ var (
 func init() {
 	tmpImage := image.NewRGBA(image.Rect(0, 0, charWidth, charHeight))
 
-	utils.CreateImageFromString(player_anim0, tmpImage)
+	utils.CreateImageFromString(player_anim0, tmpImage, utils.Green)
 	playerAnim0 = ebiten.NewImage(charWidth, charHeight)
 	playerAnim0.ReplacePixels(tmpImage.Pix)
 
-	utils.CreateImageFromString(player_anim1, tmpImage)
+	utils.CreateImageFromString(player_anim1, tmpImage, utils.Green)
 	playerAnim1 = ebiten.NewImage(charWidth, charHeight)
 	playerAnim1.ReplacePixels(tmpImage.Pix)
 
-	utils.CreateImageFromString(player_anim2, tmpImage)
+	utils.CreateImageFromString(player_anim2, tmpImage, utils.Green)
 	playerAnim2 = ebiten.NewImage(charWidth, charHeight)
 	playerAnim2.ReplacePixels(tmpImage.Pix)
 }
