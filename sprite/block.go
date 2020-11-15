@@ -40,7 +40,7 @@ type Block struct {
 
 func init() {
 	tmpImage := image.NewRGBA(image.Rect(0, 0, blockWidth, blockHeight))
-	utils.CreateImageFromString(block_img, tmpImage)
+	utils.CreateImageFromString(block_img, tmpImage, utils.Green)
 	blockImg = ebiten.NewImage(blockWidth, blockHeight)
 	blockImg.ReplacePixels(tmpImage.Pix)
 
