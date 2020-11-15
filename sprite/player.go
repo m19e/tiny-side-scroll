@@ -136,11 +136,11 @@ func (p *Player) jump() {
 func (p *Player) Move(objects []Sprite) {
 	var dx, dy int
 	if ebiten.IsKeyPressed(ebiten.KeyLeft) {
-		dx = -1
+		dx = -2
 		p.count++
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyRight) {
-		dx = 1
+		dx = 2
 		p.count++
 	}
 	if ebiten.IsKeyPressed(ebiten.KeySpace) {
