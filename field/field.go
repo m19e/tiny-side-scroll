@@ -14,6 +14,7 @@ const (
 
 	blockMark  = "+"
 	playerMark = "P"
+	mallowMark = "M"
 )
 
 type Field struct {
@@ -37,6 +38,11 @@ func NewField(fieldData string) *Field {
 				player.Position.X = indexX * width
 				player.Position.Y = indexY * height
 				field.Player = player
+			case mallowMark:
+				mallow := sprite.NewMallow()
+				mallow.Position.X = indexX * width
+				mallow.Position.Y = indexY * height
+				field.Sprites = append(field.Sprites, mallow)
 			}
 		}
 	}
