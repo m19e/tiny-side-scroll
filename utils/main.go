@@ -21,10 +21,10 @@ func CreateImageFromString(charString string, img *image.RGBA, color *color.RGBA
 				img.Pix[pos+2] = color.B
 				img.Pix[pos+3] = color.A
 			} else {
-				img.Pix[pos] = 0   // R	
-				img.Pix[pos+1] = 0 // G
-				img.Pix[pos+2] = 0 // B
-				img.Pix[pos+3] = 0 // A
+				img.Pix[pos] = 0
+				img.Pix[pos+1] = 0
+				img.Pix[pos+2] = 0
+				img.Pix[pos+3] = 0
 			}
 		}
 	}
