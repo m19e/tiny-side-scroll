@@ -2,7 +2,12 @@ package utils
 
 import (
 	"image"
+	"image/color"
 	"strings"
+)
+
+var (
+	Green = &color.RGBA{uint8(15), uint8(56), uint8(15), 0xff}
 )
 
 func CreateImageFromString(charString string, img *image.RGBA) {
