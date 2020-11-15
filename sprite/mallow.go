@@ -35,7 +35,7 @@ type Mallow struct {
 
 func init() {
 	tmpImage := image.NewRGBA(image.Rect(0, 0, mallowWidth, mallowHeight))
-	utils.CreateImageFromString(mallow_img, tmpImage)
+	utils.CreateImageFromString(mallow_img, tmpImage, utils.Green)
 	mallowImg = ebiten.NewImage(mallowWidth, mallowHeight)
 	mallowImg.ReplacePixels(tmpImage.Pix)
 }
