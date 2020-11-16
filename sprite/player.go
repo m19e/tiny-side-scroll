@@ -11,8 +11,8 @@ import (
 )
 
 const (
-	xLeftLimit  = 16 * 9
-	xRightLimit = 320 - (16 * 9)
+	xLeftLimit  = 16 * 2
+	xRightLimit = 320 - (16 * 7)
 	yUpperLimit = 16 * 2
 	yLowerLimit = 240 - (16 * 2)
 
