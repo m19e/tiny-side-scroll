@@ -2,6 +2,7 @@ package game
 
 import (
 	"image/color"
+	"tiny-side-scroll/camera"
 	"tiny-side-scroll/field"
 	"tiny-side-scroll/sprite"
 
@@ -11,6 +12,7 @@ import (
 type Game struct {
 	Field  *field.Field
 	Player *sprite.Player
+	Camera *camera.Camera
 }
 
 const (
