@@ -9,7 +9,8 @@ import (
 )
 
 type Game struct {
-	Field *field.Field
+	Field  *field.Field
+	Player *sprite.Player
 }
 
 const (
@@ -21,21 +22,21 @@ const (
 )
 
 func (g *Game) Init() {
-	g.Field = field.NewField(field.Field_data_1)
+	g.Field, g.Player = field.NewField(field.Field_data_1)
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
 	screen.Fill(color.NRGBA{uint8(155), uint8(188), uint8(15), 0xff})
 
-	g.Field.Player.Move(g.Field.Sprites)
-	g.Field.Player.Action()
-	g.Field.Player.Javelins.Move(g.Field.Player.ViewPort)
+	g.Player.Move(g.Field.Sprites)
+	g.Player.Action()
+	g.Player.Javelins.Move(g.Player.ViewPort)
 
-	g.Field.Player.DrawImage(screen, sprite.Position{})
-	for _, j := range g.Field.Player.Javelins {
-		j.DrawImage(screen, g.Field.Player.ViewPort)
+	g.Player.DrawImage(screen, sprite.Position{})
+	for _, j := range g.Player.Javelins {
+		j.DrawImage(screen, g.Player.ViewPort)
 	}
-	g.Field.DrawImage(screen, g.Field.Player.ViewPort)
+	g.Field.DrawImage(screen, g.Player.ViewPort)
 }
 
 func (g *Game) Update() error {
