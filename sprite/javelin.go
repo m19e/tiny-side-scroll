@@ -5,6 +5,7 @@ import (
 	"tiny-side-scroll/utils"
 
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/sirupsen/logrus"
 )
 
 const (
@@ -41,6 +42,21 @@ func NewJavelin(pos Position) *Javelin {
 	javelin.ImageNum = len(javelin.Images)
 	javelin.Position = pos
 	return javelin
+}
+
+func (j *Javelin) Collision(object Sprite, dx, dy *int, cm *CollideMap) {
+	switch v := object.(type) {
+	case *Block:
+		j.collideBlock(v, dx, dy, cm)
+	default:
+		logrus.Warn("unknown type")
+	}
+}
+
+func (j *Javelin) collideBlock(b *Block, dx, dy *int, cm *CollideMap) {
+	if cm.Left || cm.Right {
+		logrus.Info("Collision!")
+	}
 }
 
 func (js *Javelins) Move(viewport Position) {
