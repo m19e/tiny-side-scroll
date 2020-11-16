@@ -25,6 +25,7 @@ const (
 
 func (g *Game) Init() {
 	g.Field, g.Player = field.NewField(field.Field_data_1)
+	g.Camera = &camera.Camera{}
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
