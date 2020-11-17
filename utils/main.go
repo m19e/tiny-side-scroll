@@ -7,7 +7,8 @@ import (
 )
 
 var (
-	Green = &color.RGBA{uint8(15), uint8(56), uint8(15), 0xff}
+	Green      = &color.RGBA{uint8(15), uint8(56), uint8(15), 0xff}
+	LightGreen = &color.RGBA{uint8(155), uint8(188), uint8(15), 0xff}
 )
 
 func CreateImageFromString(charString string, img *image.RGBA, color *color.RGBA) {

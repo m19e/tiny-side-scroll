@@ -1,10 +1,10 @@
 package game
 
 import (
-	"image/color"
 	"tiny-side-scroll/camera"
 	"tiny-side-scroll/field"
 	"tiny-side-scroll/sprite"
+	"tiny-side-scroll/utils"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -23,7 +23,7 @@ func (g *Game) Init() {
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
-	screen.Fill(color.NRGBA{uint8(155), uint8(188), uint8(15), 0xff})
+	screen.Fill(utils.LightGreen)
 
 	g.Player.Move(g.Field.Sprites, g.Camera)
 	g.Player.Action(g.Camera)
