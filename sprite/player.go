@@ -194,10 +194,8 @@ func (p *Player) IsCollide(object Sprite, dx, dy *int, camera *camera.Camera) {
 func (p *Player) Collision(object Sprite, dx, dy *int, cm *CollideMap) {
 	switch v := object.(type) {
 	case *Block:
-		logrus.Warn("collide block")
 		p.collideBlock(v, dx, dy, cm)
 	case *Mallow:
-		logrus.Warn("collide mallow")
 		p.collideMallow(v, dx, dy, cm)
 	default:
 		logrus.Warn("unknown type")
