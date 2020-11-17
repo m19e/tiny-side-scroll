@@ -17,14 +17,6 @@ type Game struct {
 	Player       *sprite.Player
 }
 
-const (
-	screenWidth  = 320
-	screenHeight = 240
-
-	charWidth  = 16
-	charHeight = 16
-)
-
 func (g *Game) Init() {
 	g.Field, g.Player = field.NewField(field.Field_data_1)
 	g.Camera = &camera.Camera{}
