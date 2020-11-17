@@ -199,3 +199,7 @@ func (p *Player) collideBlock(_ *Block, dx, dy *int, cm *CollideMap) {
 		p.jumpSpeed = 0
 	}
 }
+
+func (p *Player) collideMallow(m *Mallow, _, _ *int, cm *CollideMap) {
+	m.Alive = false
+}
