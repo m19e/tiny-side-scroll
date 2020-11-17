@@ -8,6 +8,7 @@ import (
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
+	"github.com/sirupsen/logrus"
 )
 
 const (
@@ -194,6 +195,19 @@ func (p *Player) IsCollide(object Sprite, dx, dy *int, viewPort *Position) {
 	}
 
 	return
+}
+
+func (p *Player) Collision(object Sprite, dx, dy *int, cm *CollideMap) {
+	switch v := object.(type) {
+	case *Block:
+		logrus.Warn("Block です！！")
+		p.collideBlock(v, dx, dy, cm)
+	case *Mallow:
+		logrus.Warn("Coin です！！")
+		p.collideMallow(v, dx, dy, cm)
+	default:
+		logrus.Warn("unknown type")
+	}
 }
 
 func (p *Player) collideBlock(_ *Block, dx, dy *int, cm *CollideMap) {
