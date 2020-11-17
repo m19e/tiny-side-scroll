@@ -109,7 +109,6 @@ type Player struct {
 	jumping   bool
 	jumpSpeed float64
 	fallSpeed float64
-	ViewPort  Position
 	Javelins  Javelins
 }
 
@@ -133,7 +132,7 @@ func (p *Player) jump() {
 	}
 }
 
-func (p *Player) Move(objects []Sprite) {
+func (p *Player) Move(objects []Sprite, viewPort *Position) {
 	var dx, dy int
 	if ebiten.IsKeyPressed(ebiten.KeyLeft) {
 		dx = -2
@@ -154,17 +153,17 @@ func (p *Player) Move(objects []Sprite) {
 	dy = round(p.jumpSpeed)
 
 	for _, object := range objects {
-		p.IsCollide(&dx, &dy, object)
+		p.IsCollide(object, &dx, &dy, viewPort)
 	}
 
 	if p.Position.X+dx < xLeftLimit || p.Position.X+dx > xRightLimit {
-		p.ViewPort.X -= dx
+		viewPort.X -= dx
 	} else {
 		p.Position.X += dx
 	}
 
 	if p.Position.Y+dy < yUpperLimit || p.Position.Y+dy > yLowerLimit {
-		p.ViewPort.Y -= dy
+		viewPort.Y -= dy
 	} else {
 		p.Position.Y += dy
 	}
