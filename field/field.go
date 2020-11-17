@@ -19,6 +19,8 @@ const (
 
 type Field struct {
 	Sprites []sprite.Sprite
+	Width   int
+	Height  int
 }
 
 func NewField(fieldData string) (*Field, *sprite.Player) {
