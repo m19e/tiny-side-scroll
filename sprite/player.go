@@ -99,13 +99,6 @@ func round(f float64) int {
 	return int(math.Floor(f + .5))
 }
 
-func isOverlap(x1, x2, x3, x4 int) bool {
-	if x1 <= x4 && x2 >= x3 {
-		return true
-	}
-	return false
-}
-
 type Player struct {
 	BaseSprite
 	jumping   bool
