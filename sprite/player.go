@@ -4,6 +4,7 @@ import (
 	"image"
 	"math"
 
+	"tiny-side-scroll/camera"
 	"tiny-side-scroll/utils"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -133,7 +134,7 @@ func (p *Player) jump() {
 	}
 }
 
-func (p *Player) Move(objects []Sprite, viewPort *Position) {
+func (p *Player) Move(objects []Sprite, camera *camera.Camera) {
 	var dx, dy int
 	if ebiten.IsKeyPressed(ebiten.KeyLeft) {
 		dx = -2
@@ -154,41 +155,41 @@ func (p *Player) Move(objects []Sprite, viewPort *Position) {
 	dy = round(p.jumpSpeed)
 
 	for _, object := range objects {
-		p.IsCollide(object, &dx, &dy, viewPort)
+		p.IsCollide(object, &dx, &dy, camera)
 	}
 
 	if p.Position.X+dx < xLeftLimit || p.Position.X+dx > xRightLimit {
-		viewPort.X -= dx
+		camera.X -= dx
 	} else {
 		p.Position.X += dx
 	}
 
 	if p.Position.Y+dy < yUpperLimit || p.Position.Y+dy > yLowerLimit {
-		viewPort.Y -= dy
+		camera.Y -= dy
 	} else {
 		p.Position.Y += dy
 	}
 }
 
-func (p *Player) Action(viewPort *Position) {
+func (p *Player) Action(camera *camera.Camera) {
 	if inpututil.IsKeyJustPressed(ebiten.KeyF) {
 		pos := Position{
-			X: (p.Position.X - viewPort.X) + 8,
-			Y: (p.Position.Y - viewPort.Y) + 4,
+			X: (p.Position.X - camera.X) + 8,
+			Y: (p.Position.Y - camera.Y) + 4,
 		}
 		javelin := NewJavelin(pos)
 		p.Javelins = append(p.Javelins, javelin)
 	}
 }
 
-func (p *Player) DrawImage(screen *ebiten.Image, _ Position) {
+func (p *Player) DrawImage(screen *ebiten.Image, _ *camera.Camera) {
 	op := &ebiten.DrawImageOptions{}
 	op.GeoM.Translate(float64(p.Position.X), float64(p.Position.Y))
 	screen.DrawImage(p.currentImage(), op)
 }
 
-func (p *Player) IsCollide(object Sprite, dx, dy *int, viewPort *Position) {
-	cm := p.detectCollisions(object, dx, dy, viewPort)
+func (p *Player) IsCollide(object Sprite, dx, dy *int, camera *camera.Camera) {
+	cm := p.detectCollisions(object, dx, dy, camera)
 
 	if cm.HasCollision() {
 		p.Collision(object, dx, dy, cm)
