@@ -64,7 +64,7 @@ func (s *BaseSprite) GetCoordinates() (int, int, int, int) {
 	return s.Position.X, s.Position.Y, w, h
 }
 
-func (s *BaseSprite) detectCollisions(object Sprite, dx, dy *int, viewPort *Position) *CollideMap {
+func (s *BaseSprite) detectCollisions(object Sprite, dx, dy *int, camera *camera.Camera) *CollideMap {
 	var cm CollideMap
 	x := s.Position.X
 	y := s.Position.Y
@@ -73,8 +73,8 @@ func (s *BaseSprite) detectCollisions(object Sprite, dx, dy *int, viewPort *Posi
 
 	x1, y1, w1, h1 := object.GetCoordinates()
 
-	x1 += viewPort.X
-	y1 += viewPort.Y + 1 // +1 for land correctly
+	x1 += camera.X
+	y1 += camera.Y + 1 // +1 for land correctly
 
 	overlappedX := isOverlap(x, x+w, x1, x1+w1)
 	overlappedY := isOverlap(y, y+h, y1, y1+h1)
@@ -97,7 +97,7 @@ func (s *BaseSprite) detectCollisions(object Sprite, dx, dy *int, viewPort *Posi
 	return &cm
 }
 
-func (s *BaseSprite) IsCollide(object Sprite, dx, dy *int, viewPort *Position) {
+func (s *BaseSprite) IsCollide(object Sprite, dx, dy *int, camera *camera.Camera) {
 	logrus.Info("overwrite this method.")
 }
 
