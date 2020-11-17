@@ -3,6 +3,7 @@ package sprite
 import (
 	"image"
 
+	"tiny-side-scroll/camera"
 	"tiny-side-scroll/utils"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -50,10 +51,10 @@ func NewMallow() *Mallow {
 	return mallow
 }
 
-func (m *Mallow) DrawImage(screen *ebiten.Image, viewPort Position) {
+func (m *Mallow) DrawImage(screen *ebiten.Image, camera *camera.Camera) {
 	if m.Alive {
 		op := &ebiten.DrawImageOptions{}
-		op.GeoM.Translate(float64(m.Position.X+viewPort.X), float64(m.Position.Y+viewPort.Y))
+		op.GeoM.Translate(float64(m.Position.X+camera.X), float64(m.Position.Y+camera.Y))
 		screen.DrawImage(m.currentImage(), op)
 	}
 }
