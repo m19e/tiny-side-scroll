@@ -33,15 +33,15 @@ func (g *Game) Init() {
 func (g *Game) Draw(screen *ebiten.Image) {
 	screen.Fill(color.NRGBA{uint8(155), uint8(188), uint8(15), 0xff})
 
-	g.Player.Move(g.Field.Sprites)
-	g.Player.Action()
-	g.Player.Javelins.Move(g.Player.ViewPort)
+	g.Player.Move(g.Field.Sprites, g.Camera)
+	g.Player.Action(g.Camera)
+	g.Player.Javelins.Move(g.Camera)
 
-	g.Player.DrawImage(screen, sprite.Position{})
+	g.Player.DrawImage(screen, nil)
 	for _, j := range g.Player.Javelins {
-		j.DrawImage(screen, g.Player.ViewPort)
+		j.DrawImage(screen, g.Camera)
 	}
-	g.Field.DrawImage(screen, g.Player.ViewPort)
+	g.Field.DrawImage(screen, g.Camera)
 }
 
 func (g *Game) Update() error {
