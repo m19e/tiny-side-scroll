@@ -10,9 +10,11 @@ import (
 )
 
 type Game struct {
-	Field  *field.Field
-	Player *sprite.Player
-	Camera *camera.Camera
+	ScreenWidth  int
+	ScreenHeight int
+	Field        *field.Field
+	Camera       *camera.Camera
+	Player       *sprite.Player
 }
 
 const (
