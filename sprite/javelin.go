@@ -2,6 +2,7 @@ package sprite
 
 import (
 	"image"
+	"tiny-side-scroll/camera"
 	"tiny-side-scroll/utils"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -59,15 +60,15 @@ func (j *Javelin) collideBlock(b *Block, dx, dy *int, cm *CollideMap) {
 	}
 }
 
-func (js *Javelins) Move(viewport Position) {
+func (js *Javelins) Move(camera *camera.Camera) {
 	javelins := *js
 
 	for i := 0; i < len(javelins); i++ {
 		j := javelins[i]
 		j.Position.X += javelinSpeed
 
-		if j.Position.X > (screenWidth-viewport.X) ||
-			j.Position.Y > (screenHeight-viewport.Y) ||
+		if j.Position.X > (screenWidth-camera.X) ||
+			j.Position.Y > (screenHeight-camera.Y) ||
 			j.Position.X < 0 ||
 			j.Position.Y < 0 {
 			javelins = append(javelins[:i], javelins[i+1:]...)

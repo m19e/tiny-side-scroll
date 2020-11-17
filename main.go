@@ -8,11 +8,19 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
+const (
+	W = 320
+	H = 240
+)
+
 func main() {
-	game := &game.Game{}
+	game := &game.Game{
+		ScreenWidth:  W,
+		ScreenHeight: H,
+	}
 	game.Init()
 
-	ebiten.SetWindowSize(320, 240)
+	ebiten.SetWindowSize(W, H)
 	ebiten.SetWindowTitle("tiny-side-scroll")
 
 	if err := ebiten.RunGame(game); err != nil {

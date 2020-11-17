@@ -4,10 +4,12 @@ import (
 	"image"
 	"math"
 
+	"tiny-side-scroll/camera"
 	"tiny-side-scroll/utils"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
+	"github.com/sirupsen/logrus"
 )
 
 const (
@@ -109,7 +111,6 @@ type Player struct {
 	jumping   bool
 	jumpSpeed float64
 	fallSpeed float64
-	ViewPort  Position
 	Javelins  Javelins
 }
 
@@ -133,7 +134,7 @@ func (p *Player) jump() {
 	}
 }
 
-func (p *Player) Move(objects []Sprite) {
+func (p *Player) Move(objects []Sprite, camera *camera.Camera) {
 	var dx, dy int
 	if ebiten.IsKeyPressed(ebiten.KeyLeft) {
 		dx = -2
@@ -154,70 +155,76 @@ func (p *Player) Move(objects []Sprite) {
 	dy = round(p.jumpSpeed)
 
 	for _, object := range objects {
-		p.IsCollide(&dx, &dy, object)
+		p.IsCollide(object, &dx, &dy, camera)
 	}
 
 	if p.Position.X+dx < xLeftLimit || p.Position.X+dx > xRightLimit {
-		p.ViewPort.X -= dx
+		camera.X -= dx
 	} else {
 		p.Position.X += dx
 	}
 
 	if p.Position.Y+dy < yUpperLimit || p.Position.Y+dy > yLowerLimit {
-		p.ViewPort.Y -= dy
+		camera.Y -= dy
 	} else {
 		p.Position.Y += dy
 	}
 }
 
-func (p *Player) Action() {
+func (p *Player) Action(camera *camera.Camera) {
 	if inpututil.IsKeyJustPressed(ebiten.KeyF) {
 		pos := Position{
-			X: (p.Position.X - p.ViewPort.X) + 8,
-			Y: (p.Position.Y - p.ViewPort.Y) + 4,
+			X: (p.Position.X - camera.X) + 8,
+			Y: (p.Position.Y - camera.Y) + 4,
 		}
 		javelin := NewJavelin(pos)
 		p.Javelins = append(p.Javelins, javelin)
 	}
 }
 
-func (p *Player) IsCollide(dx, dy *int, object Sprite) {
-	var cm CollideMap
-	x := p.Position.X
-	y := p.Position.Y
-	img := p.currentImage()
-	w, h := img.Size()
-
-	x1, y1, w1, h1 := object.GetCoordinates()
-
-	x1 += p.ViewPort.X
-	y1 += p.ViewPort.Y + 1 // +1 for land correctly
-
-	overlappedX := isOverlap(x, x+w, x1, x1+w1)
-	overlappedY := isOverlap(y, y+h, y1, y1+h1)
-
-	if overlappedY {
-		if *dx < 0 && x+*dx <= x1+w1 && x+w+*dx >= x1 {
-			cm.Left = true
-		} else if *dx > 0 && x+w+*dx >= x1 && x+*dx <= x1+w1 {
-			cm.Right = true
-		}
-	}
-	if overlappedX {
-		if *dy < 0 && y+*dy <= y1+h1 && y+h+*dy >= y1 {
-			cm.Top = true
-		} else if *dy > 0 && y+h+*dy >= y1 && y+*dy <= y1+h1 {
-			cm.Bottom = true
-		}
-	}
-
-	if cm.HasCollision() {
-		object.Collision(p, dx, dy, &cm)
-	}
-}
-
-func (p *Player) DrawImage(screen *ebiten.Image, _ Position) {
+func (p *Player) DrawImage(screen *ebiten.Image, _ *camera.Camera) {
 	op := &ebiten.DrawImageOptions{}
 	op.GeoM.Translate(float64(p.Position.X), float64(p.Position.Y))
 	screen.DrawImage(p.currentImage(), op)
+}
+
+func (p *Player) IsCollide(object Sprite, dx, dy *int, camera *camera.Camera) {
+	cm := p.detectCollisions(object, dx, dy, camera)
+
+	if cm.HasCollision() {
+		p.Collision(object, dx, dy, cm)
+	}
+
+	return
+}
+
+func (p *Player) Collision(object Sprite, dx, dy *int, cm *CollideMap) {
+	switch v := object.(type) {
+	case *Block:
+		logrus.Warn("collide block")
+		p.collideBlock(v, dx, dy, cm)
+	case *Mallow:
+		logrus.Warn("collide mallow")
+		p.collideMallow(v, dx, dy, cm)
+	default:
+		logrus.Warn("unknown type")
+	}
+}
+
+func (p *Player) collideBlock(_ *Block, dx, dy *int, cm *CollideMap) {
+	if cm.Left || cm.Right {
+		*dx = 0
+	}
+	if cm.Top {
+		*dy = 0
+	}
+	if cm.Bottom {
+		*dy = 0
+		p.jumping = false
+		p.jumpSpeed = 0
+	}
+}
+
+func (p *Player) collideMallow(m *Mallow, _, _ *int, cm *CollideMap) {
+	m.Alive = false
 }
