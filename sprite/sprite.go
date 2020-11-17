@@ -1,13 +1,15 @@
 package sprite
 
 import (
+	"tiny-side-scroll/camera"
+
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/sirupsen/logrus"
 )
 
 type Sprite interface {
 	GetCoordinates() (int, int, int, int)
-	DrawImage(*ebiten.Image, Position)
+	DrawImage(*ebiten.Image, *camera.Camera)
 	Collision(Sprite, *int, *int, *CollideMap)
 }
 
