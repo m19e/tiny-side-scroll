@@ -180,41 +180,6 @@ func (p *Player) Action() {
 	}
 }
 
-func (p *Player) IsCollide(dx, dy *int, object Sprite) {
-	var cm CollideMap
-	x := p.Position.X
-	y := p.Position.Y
-	img := p.currentImage()
-	w, h := img.Size()
-
-	x1, y1, w1, h1 := object.GetCoordinates()
-
-	x1 += p.ViewPort.X
-	y1 += p.ViewPort.Y + 1 // +1 for land correctly
-
-	overlappedX := isOverlap(x, x+w, x1, x1+w1)
-	overlappedY := isOverlap(y, y+h, y1, y1+h1)
-
-	if overlappedY {
-		if *dx < 0 && x+*dx <= x1+w1 && x+w+*dx >= x1 {
-			cm.Left = true
-		} else if *dx > 0 && x+w+*dx >= x1 && x+*dx <= x1+w1 {
-			cm.Right = true
-		}
-	}
-	if overlappedX {
-		if *dy < 0 && y+*dy <= y1+h1 && y+h+*dy >= y1 {
-			cm.Top = true
-		} else if *dy > 0 && y+h+*dy >= y1 && y+*dy <= y1+h1 {
-			cm.Bottom = true
-		}
-	}
-
-	if cm.HasCollision() {
-		object.Collision(p, dx, dy, &cm)
-	}
-}
-
 func (p *Player) DrawImage(screen *ebiten.Image, _ Position) {
 	op := &ebiten.DrawImageOptions{}
 	op.GeoM.Translate(float64(p.Position.X), float64(p.Position.Y))
