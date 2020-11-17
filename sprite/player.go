@@ -186,6 +186,16 @@ func (p *Player) DrawImage(screen *ebiten.Image, _ Position) {
 	screen.DrawImage(p.currentImage(), op)
 }
 
+func (p *Player) IsCollide(object Sprite, dx, dy *int, viewPort *Position) {
+	cm := p.detectCollisions(object, dx, dy, viewPort)
+
+	if cm.HasCollision() {
+		p.Collision(object, dx, dy, cm)
+	}
+
+	return
+}
+
 func (p *Player) collideBlock(_ *Block, dx, dy *int, cm *CollideMap) {
 	if cm.Left || cm.Right {
 		*dx = 0
