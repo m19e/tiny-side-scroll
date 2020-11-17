@@ -185,3 +185,17 @@ func (p *Player) DrawImage(screen *ebiten.Image, _ Position) {
 	op.GeoM.Translate(float64(p.Position.X), float64(p.Position.Y))
 	screen.DrawImage(p.currentImage(), op)
 }
+
+func (p *Player) collideBlock(_ *Block, dx, dy *int, cm *CollideMap) {
+	if cm.Left || cm.Right {
+		*dx = 0
+	}
+	if cm.Top {
+		*dy = 0
+	}
+	if cm.Bottom {
+		*dy = 0
+		p.jumping = false
+		p.jumpSpeed = 0
+	}
+}
