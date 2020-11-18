@@ -10,7 +10,7 @@ import (
 type Sprite interface {
 	GetCoordinates() (int, int, int, int)
 	DrawImage(*ebiten.Image, *camera.Camera)
-	Collision(Sprite, *int, *int, *CollideMap)
+	Collision(Sprite, *int, *int)
 }
 
 type Position struct {
@@ -64,43 +64,28 @@ func (s *BaseSprite) GetCoordinates() (int, int, int, int) {
 	return s.Position.X, s.Position.Y, w, h
 }
 
-func (s *BaseSprite) detectCollisions(object Sprite, dx, dy *int, camera *camera.Camera) *CollideMap {
-	var cm CollideMap
-	x := s.Position.X
-	y := s.Position.Y
-	img := s.currentImage()
-	w, h := img.Size()
+func (s *BaseSprite) Intersect(object Sprite) bool {
+	ax, ay, aw, ah := s.GetCoordinates()
+	bx, by, bw, bh := object.GetCoordinates()
 
-	x1, y1, w1, h1 := object.GetCoordinates()
+	// a left-top < b right-bottom && a right-bottom > b left-top
+	return (ax < bx+bw && ay < by+bh) && (ax+aw > bx && ay+ah > by)
+}
 
-	x1 += camera.X
-	y1 += camera.Y + 1 // +1 for land correctly
+func (s *BaseSprite) Width() int {
+	w, _ := s.currentImage().Size()
+	return w
+}
 
-	overlappedX := isOverlap(x, x+w, x1, x1+w1)
-	overlappedY := isOverlap(y, y+h, y1, y1+h1)
-
-	if overlappedY {
-		if *dx < 0 && x+*dx <= x1+w1 && x+w+*dx >= x1 {
-			cm.Left = true
-		} else if *dx > 0 && x+w+*dx >= x1 && x+*dx <= x1+w1 {
-			cm.Right = true
-		}
-	}
-	if overlappedX {
-		if *dy < 0 && y+*dy <= y1+w1 && y+h+*dy >= y1 {
-			cm.Top = true
-		} else if *dy > 0 && y+h+*dy >= y1 && y+*dy <= y1+h1 {
-			cm.Bottom = true
-		}
-	}
-
-	return &cm
+func (s *BaseSprite) Height() int {
+	_, h := s.currentImage().Size()
+	return h
 }
 
 func (s *BaseSprite) IsCollide(object Sprite, dx, dy *int, camera *camera.Camera) {
 	logrus.Info("overwrite this method.")
 }
 
-func (s *BaseSprite) Collision(object Sprite, dx, dy *int, cm *CollideMap) {
+func (s *BaseSprite) Collision(object Sprite, dx, dy *int) {
 	logrus.Info("overwrite this method.")
 }

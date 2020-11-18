@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	width  = 17
-	height = 17
+	width  = 16
+	height = 16
 
 	blockMark  = "+"
 	playerMark = "P"
@@ -20,13 +20,18 @@ const (
 
 type Field struct {
 	Sprites []sprite.Sprite
+	Width   int
+	Height  int
 }
 
 func NewField(fieldData string) (*Field, *sprite.Player) {
 	player := new(sprite.Player)
 	field := new(Field)
 
+	var countX, countY int
+
 	for indexY, line := range strings.Split(fieldData, "\n") {
+		counter := 0
 		for indexX, str := range line {
 			switch string(str) {
 			case blockMark:
@@ -44,9 +49,16 @@ func NewField(fieldData string) (*Field, *sprite.Player) {
 				mallow.Position.Y = indexY * height
 				field.Sprites = append(field.Sprites, mallow)
 			}
+			counter++
 		}
+		if countX < counter {
+			countX = counter
+		}
+		countY++
 	}
 
+	field.Width = countX * width
+	field.Height = countY * height
 	return field, player
 }
 

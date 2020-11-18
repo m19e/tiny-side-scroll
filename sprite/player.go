@@ -99,13 +99,6 @@ func round(f float64) int {
 	return int(math.Floor(f + .5))
 }
 
-func isOverlap(x1, x2, x3, x4 int) bool {
-	if x1 <= x4 && x2 >= x3 {
-		return true
-	}
-	return false
-}
-
 type Player struct {
 	BaseSprite
 	jumping   bool
@@ -134,7 +127,7 @@ func (p *Player) jump() {
 	}
 }
 
-func (p *Player) Move(objects []Sprite, camera *camera.Camera) {
+func (p *Player) Move(objects []Sprite) {
 	var dx, dy int
 	if ebiten.IsKeyPressed(ebiten.KeyLeft) {
 		dx = -2
@@ -154,77 +147,78 @@ func (p *Player) Move(objects []Sprite, camera *camera.Camera) {
 	}
 	dy = round(p.jumpSpeed)
 
-	for _, object := range objects {
-		p.IsCollide(object, &dx, &dy, camera)
+	if dx != 0 {
+		p.moveX(dx, objects)
 	}
-
-	if p.Position.X+dx < xLeftLimit || p.Position.X+dx > xRightLimit {
-		camera.X -= dx
-	} else {
-		p.Position.X += dx
-	}
-
-	if p.Position.Y+dy < yUpperLimit || p.Position.Y+dy > yLowerLimit {
-		camera.Y -= dy
-	} else {
-		p.Position.Y += dy
+	if dy != 0 {
+		p.moveY(dy, objects)
 	}
 }
 
-func (p *Player) Action(camera *camera.Camera) {
+func (p *Player) moveX(dx int, sprites []Sprite) {
+	p.Position.X += dx
+	for _, s := range sprites {
+		if p.Intersect(s) {
+			p.Collision(s, dx, 0)
+		}
+	}
+
+}
+
+func (p *Player) moveY(dy int, sprites []Sprite) {
+	p.Position.Y += dy
+	for _, s := range sprites {
+		if p.Intersect(s) {
+			p.Collision(s, 0, dy)
+		}
+	}
+}
+
+func (p *Player) Action() {
 	if inpututil.IsKeyJustPressed(ebiten.KeyF) {
 		pos := Position{
-			X: (p.Position.X - camera.X) + 8,
-			Y: (p.Position.Y - camera.Y) + 4,
+			X: (p.Position.X) + 8,
+			Y: (p.Position.Y) + 4,
 		}
 		javelin := NewJavelin(pos)
 		p.Javelins = append(p.Javelins, javelin)
 	}
 }
 
-func (p *Player) DrawImage(screen *ebiten.Image, _ *camera.Camera) {
+func (p *Player) DrawImage(screen *ebiten.Image, camera *camera.Camera) {
 	op := &ebiten.DrawImageOptions{}
-	op.GeoM.Translate(float64(p.Position.X), float64(p.Position.Y))
+	op.GeoM.Translate(float64(p.Position.X+camera.X), float64(p.Position.Y+camera.Y))
 	screen.DrawImage(p.currentImage(), op)
 }
 
-func (p *Player) IsCollide(object Sprite, dx, dy *int, camera *camera.Camera) {
-	cm := p.detectCollisions(object, dx, dy, camera)
-
-	if cm.HasCollision() {
-		p.Collision(object, dx, dy, cm)
-	}
-
-	return
-}
-
-func (p *Player) Collision(object Sprite, dx, dy *int, cm *CollideMap) {
+func (p *Player) Collision(object Sprite, dx, dy int) {
 	switch v := object.(type) {
 	case *Block:
-		logrus.Warn("collide block")
-		p.collideBlock(v, dx, dy, cm)
+		p.collideBlock(v, dx, dy)
 	case *Mallow:
-		logrus.Warn("collide mallow")
-		p.collideMallow(v, dx, dy, cm)
+		p.collideMallow(v)
 	default:
 		logrus.Warn("unknown type")
 	}
 }
 
-func (p *Player) collideBlock(_ *Block, dx, dy *int, cm *CollideMap) {
-	if cm.Left || cm.Right {
-		*dx = 0
+func (p *Player) collideBlock(b *Block, dx, dy int) {
+	if dx > 0 {
+		p.Position.X = b.Position.X - p.Width()
 	}
-	if cm.Top {
-		*dy = 0
+	if dx < 0 {
+		p.Position.X = b.Position.X + p.Width()
 	}
-	if cm.Bottom {
-		*dy = 0
+	if dy > 0 {
+		p.Position.Y = b.Position.Y - p.Height()
 		p.jumping = false
 		p.jumpSpeed = 0
 	}
+	if dy < 0 {
+		p.Position.Y = b.Position.Y + p.Height()
+	}
 }
 
-func (p *Player) collideMallow(m *Mallow, _, _ *int, cm *CollideMap) {
+func (p *Player) collideMallow(m *Mallow) {
 	m.Alive = false
 }
