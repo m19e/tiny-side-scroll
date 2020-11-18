@@ -196,7 +196,7 @@ func (p *Player) Collision(object Sprite, dx, dy *int, cm *CollideMap) {
 	case *Block:
 		p.collideBlock(v, dx, dy, cm)
 	case *Mallow:
-		p.collideMallow(v, dx, dy, cm)
+		p.collideMallow(v)
 	default:
 		logrus.Warn("unknown type")
 	}
@@ -216,6 +216,6 @@ func (p *Player) collideBlock(_ *Block, dx, dy *int, cm *CollideMap) {
 	}
 }
 
-func (p *Player) collideMallow(m *Mallow, _, _ *int, cm *CollideMap) {
+func (p *Player) collideMallow(m *Mallow) {
 	m.Alive = false
 }
