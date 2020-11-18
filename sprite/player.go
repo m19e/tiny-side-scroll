@@ -191,10 +191,10 @@ func (p *Player) IsCollide(object Sprite, dx, dy *int, camera *camera.Camera) {
 	return
 }
 
-func (p *Player) Collision(object Sprite, dx, dy *int, cm *CollideMap) {
+func (p *Player) Collision(object Sprite, dx, dy int) {
 	switch v := object.(type) {
 	case *Block:
-		p.collideBlock(v, dx, dy, cm)
+		p.collideBlock(v, dx, dy)
 	case *Mallow:
 		p.collideMallow(v)
 	default:
@@ -202,15 +202,18 @@ func (p *Player) Collision(object Sprite, dx, dy *int, cm *CollideMap) {
 	}
 }
 
-func (p *Player) collideBlock(_ *Block, dx, dy *int, cm *CollideMap) {
-	if cm.Left || cm.Right {
-		*dx = 0
+func (p *Player) collideBlock(b *Block, dx, dy int) {
+	if dx > 0 {
+		p.Position.X = b.Position.X - p.Width()
 	}
-	if cm.Top {
-		*dy = 0
+	if dx < 0 {
+		p.Position.X = b.Position.X + p.Width()
 	}
-	if cm.Bottom {
-		*dy = 0
+	if dy < 0 {
+		p.Position.Y = p.Position.Y + p.Height()
+	}
+	if dy > 0 {
+		p.Position.Y = b.Position.Y - p.Height()
 		p.jumping = false
 		p.jumpSpeed = 0
 	}
