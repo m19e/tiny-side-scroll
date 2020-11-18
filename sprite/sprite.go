@@ -72,6 +72,16 @@ func (s *BaseSprite) Intersect(object Sprite) bool {
 	return (ax < bx+bw && ay < by+bh) && (ax+aw > bx && ay+ah > by)
 }
 
+func (s *BaseSprite) Width() int {
+	w, _ := s.currentImage().Size()
+	return w
+}
+
+func (s *BaseSprite) Height() int {
+	_, h := s.currentImage().Size()
+	return h
+}
+
 func (s *BaseSprite) IsCollide(object Sprite, dx, dy *int, camera *camera.Camera) {
 	logrus.Info("overwrite this method.")
 }
