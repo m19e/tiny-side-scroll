@@ -127,7 +127,7 @@ func (p *Player) jump() {
 	}
 }
 
-func (p *Player) Move(objects []Sprite, camera *camera.Camera) {
+func (p *Player) Move(objects []Sprite) {
 	var dx, dy int
 	if ebiten.IsKeyPressed(ebiten.KeyLeft) {
 		dx = -2
@@ -147,20 +147,11 @@ func (p *Player) Move(objects []Sprite, camera *camera.Camera) {
 	}
 	dy = round(p.jumpSpeed)
 
-	for _, object := range objects {
-		p.IsCollide(object, &dx, &dy, camera)
+	if dx != 0 {
+		p.moveX(dx, objects)
 	}
-
-	if p.Position.X+dx < xLeftLimit || p.Position.X+dx > xRightLimit {
-		camera.X -= dx
-	} else {
-		p.Position.X += dx
-	}
-
-	if p.Position.Y+dy < yUpperLimit || p.Position.Y+dy > yLowerLimit {
-		camera.Y -= dy
-	} else {
-		p.Position.Y += dy
+	if dy != 0 {
+		p.moveY(dy, objects)
 	}
 }
 
