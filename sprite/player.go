@@ -181,16 +181,6 @@ func (p *Player) DrawImage(screen *ebiten.Image, _ *camera.Camera) {
 	screen.DrawImage(p.currentImage(), op)
 }
 
-func (p *Player) IsCollide(object Sprite, dx, dy *int, camera *camera.Camera) {
-	cm := p.detectCollisions(object, dx, dy, camera)
-
-	if cm.HasCollision() {
-		p.Collision(object, dx, dy, cm)
-	}
-
-	return
-}
-
 func (p *Player) Collision(object Sprite, dx, dy int) {
 	switch v := object.(type) {
 	case *Block:
