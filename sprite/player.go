@@ -164,6 +164,25 @@ func (p *Player) Move(objects []Sprite, camera *camera.Camera) {
 	}
 }
 
+func (p *Player) moveX(dx int, sprites []Sprite) {
+	p.Position.X += dx
+	for _, s := range sprites {
+		if p.Intersect(s) {
+			p.Collision(s, dx, 0)
+		}
+	}
+
+}
+
+func (p *Player) moveY(dy int, sprites []Sprite) {
+	p.Position.Y += dy
+	for _, s := range sprites {
+		if p.Intersect(s) {
+			p.Collision(s, 0, dy)
+		}
+	}
+}
+
 func (p *Player) Action() {
 	if inpututil.IsKeyJustPressed(ebiten.KeyF) {
 		pos := Position{
