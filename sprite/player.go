@@ -136,17 +136,28 @@ func (p *Player) jump() {
 func (p *Player) Move(objects []Sprite) {
 	var dx, dy int
 	if ebiten.IsKeyPressed(ebiten.KeyLeft) {
-		dx = -2
+		if p.Speed > -p.MaxSpeed {
+			p.Speed -= p.AccelSpeed
+		}
 		p.count++
-	}
-	if ebiten.IsKeyPressed(ebiten.KeyRight) {
-		dx = 2
+	} else if ebiten.IsKeyPressed(ebiten.KeyRight) {
+		if p.Speed < p.MaxSpeed {
+			p.Speed += p.AccelSpeed
+		}
 		p.count++
+	} else {
+		if p.Speed > 0 {
+			p.Speed -= p.AccelSpeed
+		} else if p.Speed < 0 {
+			p.Speed += p.AccelSpeed
+		}
 	}
+
 	if ebiten.IsKeyPressed(ebiten.KeySpace) {
 		p.jump()
 		p.count++
 	}
+	dx = round(p.Speed)
 
 	if p.jumpSpeed < 5 {
 		p.jumpSpeed += p.fallSpeed
