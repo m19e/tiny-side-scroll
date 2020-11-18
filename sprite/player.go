@@ -153,7 +153,7 @@ func (p *Player) Move(objects []Sprite) {
 		}
 	}
 
-	if ebiten.IsKeyPressed(ebiten.KeySpace) {
+	if inpututil.IsKeyJustPressed(ebiten.KeySpace) {
 		p.jump()
 		p.count++
 	}
