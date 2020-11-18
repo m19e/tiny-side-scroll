@@ -45,19 +45,17 @@ func NewJavelin(pos Position) *Javelin {
 	return javelin
 }
 
-func (j *Javelin) Collision(object Sprite, dx, dy *int, cm *CollideMap) {
+func (j *Javelin) Collision(object Sprite, dx, dy *int) {
 	switch v := object.(type) {
 	case *Block:
-		j.collideBlock(v, dx, dy, cm)
+		j.collideBlock(v, dx, dy)
 	default:
 		logrus.Warn("unknown type")
 	}
 }
 
-func (j *Javelin) collideBlock(b *Block, dx, dy *int, cm *CollideMap) {
-	if cm.Left || cm.Right {
-		logrus.Info("Collision!")
-	}
+func (j *Javelin) collideBlock(b *Block, dx, dy *int) {
+	logrus.Info("Collision!")
 }
 
 func (js *Javelins) Move(camera *camera.Camera) {
