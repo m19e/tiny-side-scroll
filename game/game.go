@@ -20,8 +20,10 @@ type Game struct {
 func (g *Game) Init() {
 	g.Field, g.Player = field.NewField(field.Field_data_1)
 	g.Camera = &camera.Camera{
-		Width:  g.ScreenWidth,
-		Height: g.ScreenHeight,
+		Width:     g.ScreenWidth,
+		Height:    g.ScreenHeight,
+		MaxWidth:  g.Field.Width,
+		MaxHeight: g.Field.Height,
 	}
 }
 
