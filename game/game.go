@@ -30,6 +30,7 @@ func (g *Game) Init() {
 func (g *Game) Draw(screen *ebiten.Image) {
 	screen.Fill(utils.LightGreen)
 
+	g.Camera.Move(g.Player.Position.X, g.Player.Position.Y)
 	g.Player.Move(g.Field.Sprites)
 	g.Player.Action()
 	g.Player.Javelins.Move(g.Camera)
