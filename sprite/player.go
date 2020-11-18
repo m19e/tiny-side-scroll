@@ -175,9 +175,9 @@ func (p *Player) Action(camera *camera.Camera) {
 	}
 }
 
-func (p *Player) DrawImage(screen *ebiten.Image, _ *camera.Camera) {
+func (p *Player) DrawImage(screen *ebiten.Image, camera *camera.Camera) {
 	op := &ebiten.DrawImageOptions{}
-	op.GeoM.Translate(float64(p.Position.X), float64(p.Position.Y))
+	op.GeoM.Translate(float64(p.Position.X+camera.X), float64(p.Position.Y+camera.Y))
 	screen.DrawImage(p.currentImage(), op)
 }
 
