@@ -10,7 +10,7 @@ import (
 type Sprite interface {
 	GetCoordinates() (int, int, int, int)
 	DrawImage(*ebiten.Image, *camera.Camera)
-	Collision(Sprite, *int, *int, *CollideMap)
+	Collision(Sprite, *int, *int)
 }
 
 type Position struct {
@@ -108,6 +108,6 @@ func (s *BaseSprite) IsCollide(object Sprite, dx, dy *int, camera *camera.Camera
 	logrus.Info("overwrite this method.")
 }
 
-func (s *BaseSprite) Collision(object Sprite, dx, dy *int, cm *CollideMap) {
+func (s *BaseSprite) Collision(object Sprite, dx, dy *int) {
 	logrus.Info("overwrite this method.")
 }
