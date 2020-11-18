@@ -105,6 +105,10 @@ type Player struct {
 	jumpSpeed float64
 	fallSpeed float64
 	Javelins  Javelins
+
+	Speed      float64
+	AccelSpeed float64
+	MaxSpeed   float64
 }
 
 func NewPlayer() *Player {
@@ -117,6 +121,8 @@ func NewPlayer() *Player {
 	player.ImageNum = len(player.Images)
 	player.jumpSpeed = 0
 	player.fallSpeed = 0.4
+	player.AccelSpeed = 0.25
+	player.MaxSpeed = 3.0
 	return player
 }
 
@@ -130,17 +136,28 @@ func (p *Player) jump() {
 func (p *Player) Move(objects []Sprite) {
 	var dx, dy int
 	if ebiten.IsKeyPressed(ebiten.KeyLeft) {
-		dx = -2
+		if p.Speed > -p.MaxSpeed {
+			p.Speed -= p.AccelSpeed
+		}
 		p.count++
-	}
-	if ebiten.IsKeyPressed(ebiten.KeyRight) {
-		dx = 2
+	} else if ebiten.IsKeyPressed(ebiten.KeyRight) {
+		if p.Speed < p.MaxSpeed {
+			p.Speed += p.AccelSpeed
+		}
 		p.count++
+	} else {
+		if p.Speed > 0 {
+			p.Speed -= p.AccelSpeed
+		} else if p.Speed < 0 {
+			p.Speed += p.AccelSpeed
+		}
 	}
-	if ebiten.IsKeyPressed(ebiten.KeySpace) {
+
+	if inpututil.IsKeyJustPressed(ebiten.KeySpace) {
 		p.jump()
 		p.count++
 	}
+	dx = round(p.Speed)
 
 	if p.jumpSpeed < 5 {
 		p.jumpSpeed += p.fallSpeed
