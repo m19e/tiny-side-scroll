@@ -30,11 +30,11 @@ func (g *Game) Init() {
 func (g *Game) Draw(screen *ebiten.Image) {
 	screen.Fill(utils.LightGreen)
 
-	g.Player.Move(g.Field.Sprites, g.Camera)
-	g.Player.Action(g.Camera)
+	g.Player.Move(g.Field.Sprites)
+	g.Player.Action()
 	g.Player.Javelins.Move(g.Camera)
 
-	g.Player.DrawImage(screen, nil)
+	g.Player.DrawImage(screen, g.Camera)
 	for _, j := range g.Player.Javelins {
 		j.DrawImage(screen, g.Camera)
 	}
