@@ -209,13 +209,13 @@ func (p *Player) collideBlock(b *Block, dx, dy int) {
 	if dx < 0 {
 		p.Position.X = b.Position.X + p.Width()
 	}
-	if dy < 0 {
-		p.Position.Y = p.Position.Y + p.Height()
-	}
 	if dy > 0 {
 		p.Position.Y = b.Position.Y - p.Height()
 		p.jumping = false
 		p.jumpSpeed = 0
+	}
+	if dy < 0 {
+		p.Position.Y = b.Position.Y + p.Height()
 	}
 }
 
