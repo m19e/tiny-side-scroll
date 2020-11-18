@@ -164,11 +164,11 @@ func (p *Player) Move(objects []Sprite, camera *camera.Camera) {
 	}
 }
 
-func (p *Player) Action(camera *camera.Camera) {
+func (p *Player) Action() {
 	if inpututil.IsKeyJustPressed(ebiten.KeyF) {
 		pos := Position{
-			X: (p.Position.X - camera.X) + 8,
-			Y: (p.Position.Y - camera.Y) + 4,
+			X: (p.Position.X) + 8,
+			Y: (p.Position.Y) + 4,
 		}
 		javelin := NewJavelin(pos)
 		p.Javelins = append(p.Javelins, javelin)
