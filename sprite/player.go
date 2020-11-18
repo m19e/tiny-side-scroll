@@ -105,6 +105,10 @@ type Player struct {
 	jumpSpeed float64
 	fallSpeed float64
 	Javelins  Javelins
+
+	Speed      float64
+	AccelSpeed float64
+	MaxSpeed   float64
 }
 
 func NewPlayer() *Player {
@@ -117,6 +121,8 @@ func NewPlayer() *Player {
 	player.ImageNum = len(player.Images)
 	player.jumpSpeed = 0
 	player.fallSpeed = 0.4
+	player.AccelSpeed = 0.25
+	player.MaxSpeed = 3.0
 	return player
 }
 
