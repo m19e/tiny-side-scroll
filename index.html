@@ -9,7 +9,7 @@
 <meta name="twitter:player:height" content="240" />
 <script src="wasm_exec.js"></script>
 <script>
-    // Polyfill
+    // Polyfill.
     if (!WebAssembly.instantiateStreaming) {
         WebAssembly.instantiateStreaming = async (resp, importObject) => {
             const source = await (await resp).arrayBuffer();
