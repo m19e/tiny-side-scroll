@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<meta name="twitter:card" content="player" />
+<!-- <meta name="twitter:site" content="@m19e"> -->
+<meta name="twitter:title" content="ちいさい横スクロール - Tiny-Side-Scroll" />
+<meta name="twitter:description" content="ちいさい横スクロール - Tiny-Side-Scroll" />
+<!-- <meta name="twitter:image" content="https://,19e.github.io/tiny-side-scroll/feature.png"> -->
+<meta name="twitter:player" content="https://m19e.github.io/tiny-side-scroll/" />
+<meta name="twitter:player:width" content="320" />
+<meta name="twitter:player:height" content="240" />
+<script src="wasm_exec.js"></script>
+<script>
+    // Polyfill
+    if (!WebAssembly.instantiateStreaming) {
+        WebAssembly.instantiateStreaming = async (resp, importObject) => {
+            const source = await (await resp).arrayBuffer();
+            return await WebAssembly.instantiate(source, importObject);
+        };
+    }
+
+    const go = new Go();
+    WebAssembly.instantiateStreaming(fetch("tss.wasm"), go.importObject).then((result) => {
+        go.run(result.instance);
+        document.getElementById("loading").remove();
+    });
+</script>
+<p id="loading">Loading...</p>
